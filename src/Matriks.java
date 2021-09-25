@@ -38,6 +38,7 @@ public class Matriks {
         int baris = arr.length;
         int kolom = arr[0].length;
         
+        // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
         for (int i=0;i<baris;i++)
         {
             int notzeroi = i;
@@ -63,6 +64,7 @@ public class Matriks {
                 break;
             }
             double temp;
+            // menukar baris jika baris yg seharusnya ada kolom ada 1 berisi 0
             if (notzeroi != i) 
             {
                 for (int j = 0; j<kolom;j++)
@@ -73,12 +75,15 @@ public class Matriks {
                 }
                 notzeroi = i;
             }
+            
+            // membagi baris agar yang paling depan 1
             double head = arr[notzeroi][notzeroj];
             for (int j=0;j<kolom;j++)
             {
                 arr[i][j] = arr[i][j]/head;
             }
 
+            // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
             if (i<kolom-1)
             {
                 for (int i1=i+1;i1<baris;i1++)
