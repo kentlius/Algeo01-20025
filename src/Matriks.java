@@ -202,7 +202,7 @@ public class Matriks {
                                     variabelk[i] += (m[i][j] * variabelk[j]);
                                 }
                             }
-                            x[i] += (" + " + Double.toString(variabelk[i]) + "x" + (k-1));
+                            x[i] += (" + " + Double.toString(variabelk[i]) + " " + x[k]);
                         }
                     }
                 }
