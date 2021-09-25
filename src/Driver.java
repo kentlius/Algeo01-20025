@@ -17,6 +17,8 @@ public class Driver {
         
         System.out.println("Hasil matriks:");
         m1.tulisMatriks();
+
+        System.out.println(m1.solveGauss());
         
         input.close();
     }
