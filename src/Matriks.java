@@ -102,6 +102,7 @@ public class Matriks {
         String[] solution = new String[kol-1];
         String x[] = new String[kol-1];
         int banyakzero = 0;
+        boolean[] variabel = new boolean[kol-1];
         // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
         boolean solvable = true;
         for (int i=0;i<brs;i++){
@@ -146,7 +147,6 @@ public class Matriks {
             // solusi dalam bentuk variabel
             else {
                 // menentukan elemen yang tidak berbentuk variabel
-                boolean[] variabel = new boolean[kol-1];
                 for (int i=0; i<(kol-1);i++)
                 {
                     variabel[i] = true;
@@ -205,26 +205,40 @@ public class Matriks {
                         {
                             if(i == brs-1)
                             {
-                                variabelk[i] = m[i][k];
+                                variabelk[i] = -1*m[i][k];
                             }
                             else
                             {
-                                variabelk[i] = m[i][k];
+                                variabelk[i] = -1*m[i][k];
                                 for(int j=i+1;j<brs-1;j++)
                                 {
                                     variabelk[i] += (m[i][j] * variabelk[j]);
                                 }
                             }
-                            x[i] += (" + " + Double.toString(variabelk[i]) + " " + x[k]);                               
+                            if(variabelk[i]>0)
+                            {
+                                x[i] += (" + " + Double.toString(variabelk[i]) + "  x" + (k+1));                               
+                            }
+                            if(variabelk[i]<0)
+                            {
+                                variabelk[i] *= -1;
+                                x[i] += (" - " + Double.toString(variabelk[i]) + "  x" + (k+1));
+                            }
                         }
-
                     }
                 }
             }
         }
         for(int i = 0; i < x.length; ++i)
         {
-            System.out.println("x" + (i + 1) + " = " + x[i]);
+            if (variabel[i])
+            {
+                 System.out.println("x" + (i+1) + " = " + "x" + (i+1));
+            }
+            else
+            {
+                 System.out.println("x" + (i + 1) + " = " + x[i]);
+            }
         }
         solution = x;
         return solution;
@@ -291,13 +305,15 @@ public class Matriks {
                 }
             }   
         }
-        for(int i=brs-1;i>0;i--)
+        for(int i=kol-2;i>0;i--)
         {
             for(int i1=i-1;i1>=0;i1--)
             {
                 double konstanta = m[i1][i];
-                m[i1][i] -= konstanta*m[i][i];
-                m[i1][kol-1] -= konstanta*m[i][kol-1];
+                for(int j=i;j<kol;j++)
+                {
+                    m[i1][j] -= konstanta*m[i][j];
+                }
             }
         }
         return m;
