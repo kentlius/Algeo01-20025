@@ -19,7 +19,7 @@ public class Matriks {
                 m[i][j]=input.nextDouble();
     }
 
-    public void tulisMatriks(){
+    public void tulisMatriks() {
         int i,j;
 
         for(i=0;i<brs;++i)
@@ -32,19 +32,16 @@ public class Matriks {
         }
     }
     
-    public static double[][] splGauss(double[][] m) {
-        int baris = m.length;
-        int kolom = m[0].length;
-        
+    public double[][] splGauss() {
         // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
-        for (int i=0;i<baris;i++)
+        for (int i=0;i<brs;i++)
         {
             int notzeroi = i;
             int notzeroj = i;
             boolean notZero = false;
-            for (int i1=i; i1<baris;i1++)
+            for (int i1=i; i1<brs;i1++)
             {
-                for (int j1=i;j1<kolom;j1++)
+                for (int j1=i;j1<kol;j1++)
                 {
                     if (m[i1][j1] != 0)
                     {
@@ -65,7 +62,7 @@ public class Matriks {
             // menukar baris jika baris yg seharusnya ada kolom ada 1 berisi 0
             if (notzeroi != i) 
             {
-                for (int j = 0; j<kolom;j++)
+                for (int j = 0; j<kol;j++)
                 {
                     temp = m[i][j];
                     m[i][j] = m[notzeroi][j];
@@ -76,18 +73,18 @@ public class Matriks {
             
             // membagi baris agar yang paling depan 1
             double head = m[notzeroi][notzeroj];
-            for (int j=0;j<kolom;j++)
+            for (int j=0;j<kol;j++)
             {
                 m[i][j] = m[i][j]/head;
             }
 
             // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
-            if (i<kolom-1)
+            if (i<kol-1)
             {
-                for (int i1=i+1;i1<baris;i1++)
+                for (int i1=i+1;i1<brs;i1++)
                 {
                     double konstanta = m[i1][notzeroj];
-                    for (int j1=notzeroj;j1<kolom;j1++)
+                    for (int j1=notzeroj;j1<kol;j1++)
                     {
                         m[i1][j1] -= m[notzeroi][j1]*konstanta;
                     }
@@ -97,25 +94,20 @@ public class Matriks {
         return m;
     }
     
-    
-    
-    public static String[] solveGauss(double[][] m)
+    public String[] solveGauss()
     {
-        m = splGauss(m);
-        int baris = m.length;
-        int kolom = m[0].length;
         boolean solvable = true;
-        String[] solution = new String[kolom-1];
-        String x[] = new String[kolom-1];
+        String[] solution = new String[kol-1];
+        String x[] = new String[kol-1];
         // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
-        for (int i=0;i<baris;i++){
+        for (int i=0;i<brs;i++){
             int banyakzero = 0;
-            for (int j=0;j<kolom;j++){
+            for (int j=0;j<kol;j++){
                 if (m[i][j]==0){
                     banyakzero +=1;
                 }
             }
-            if(banyakzero==kolom-1){
+            if(banyakzero==kol-1){
                 solvable = false;
                 break;
             }
@@ -126,13 +118,13 @@ public class Matriks {
             solution = null;
         } else{
             // solusi hanya dalam bentuk angka
-            if (baris == kolom-1){
-                for(int i=kolom-2;i>=0;i--){
-                    if(i==kolom-2){
-                        x[i] = Double.toString(m[i][kolom-1]);
+            if (brs == kol-1){
+                for(int i=kol-2;i>=0;i--){
+                    if(i==kol-2){
+                        x[i] = Double.toString(m[i][kol-1]);
                     } else {
-                        double temp = m[i][kolom-1];
-                        for(int j=i+1;j<kolom-1;j++){
+                        double temp = m[i][kol-1];
+                        for(int j=i+1;j<kol-1;j++){
                             temp -= m[i][j]*Double.valueOf(x[j]);
                         }
                         x[i] = Double.toString(temp);
@@ -142,15 +134,15 @@ public class Matriks {
             // solusi dalam bentuk variabel
             else {
                 // menentukan elemen yang tidak berbentuk variabel
-                boolean[] variabel = new boolean[kolom-1];
-                for (int i=0; i<(kolom-1);i++)
+                boolean[] variabel = new boolean[kol-1];
+                for (int i=0; i<(kol-1);i++)
                 {
                     variabel[i] = true;
                 }
 
-                for (int i=0; i<(baris);i++)
+                for (int i=0; i<(brs);i++)
                 {
-                    for (int j=0; j<(kolom-1);j++)
+                    for (int j=0; j<(kol-1);j++)
                     {
                         if (m[i][j]==1)
                         {
@@ -159,12 +151,12 @@ public class Matriks {
                         }
                     }
                 }
-                for (int i=0;i<(kolom-1);i++)
+                for (int i=0;i<(kol-1);i++)
                 {
                     x[i] = "0.0";
                 }
 
-                for (int i=0; i<baris; i++)
+                for (int i=0; i<brs; i++)
                 {
                     if(variabel[i])
                     {
@@ -172,12 +164,12 @@ public class Matriks {
                     }
                 }
                 // Menjumlahkan hanya yang dalam bentuk angka
-                for (int i=baris-1;i>=0;i--)
+                for (int i=brs-1;i>=0;i--)
                 {
-                    double temp = m[i][kolom-1];
-                    if(i<baris-1)
+                    double temp = m[i][kol-1];
+                    if(i<brs-1)
                     {
-                        for(int j=i+1;j<baris;j++)
+                        for(int j=i+1;j<brs;j++)
                         {
                             temp -= m[i][j]*Double.valueOf(x[j]);
                         }
@@ -190,21 +182,21 @@ public class Matriks {
                 }
 
                 // Menjumlahkan variabel ke dalam jawaban
-                for(int k=0;k<kolom-1;k++)
+                for(int k=0;k<kol-1;k++)
                 {
                     if(variabel[k])
                     {
-                        double variabelk[] = new double[kolom-1];
-                        for(int i=baris-1;i>=0;i--)
+                        double variabelk[] = new double[kol-1];
+                        for(int i=brs-1;i>=0;i--)
                         {
-                            if(i == baris-1)
+                            if(i == brs-1)
                             {
                                 variabelk[i] = m[i][k];
                             }
                             else
                             {
                                 variabelk[i] = m[i][k];
-                                for(int j=i+1;j<baris-1;j++)
+                                for(int j=i+1;j<brs-1;j++)
                                 {
                                     variabelk[i] += (m[i][j] * variabelk[j]);
                                 }
@@ -222,6 +214,4 @@ public class Matriks {
         solution = x;
         return solution;
     }
-    
-    
 }
