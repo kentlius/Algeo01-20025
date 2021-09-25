@@ -73,9 +73,12 @@ public class Matriks {
             
             // membagi baris agar yang paling depan 1
             double head = m[notzeroi][notzeroj];
-            for (int j=0;j<kol;j++)
+            if(head!=0)
             {
-                m[i][j] = m[i][j]/head;
+                for (int j=0;j<kol;j++)
+                {
+                    m[i][j] = m[i][j]/head;
+                }
             }
 
             // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
@@ -96,15 +99,16 @@ public class Matriks {
     
     public String[] solveGauss()
     {
-        boolean solvable = true;
         String[] solution = new String[kol-1];
         String x[] = new String[kol-1];
+        int banyakzero = 0;
         // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
+        boolean solvable = true;
         for (int i=0;i<brs;i++){
-            int banyakzero = 0;
-            for (int j=0;j<kol;j++){
+            banyakzero = 0;
+            for (int j=0;j<kol-1;j++){
                 if (m[i][j]==0){
-                    banyakzero +=1;
+                    banyakzero += 1;
                 }
             }
             if(banyakzero==kol-1){
@@ -112,7 +116,7 @@ public class Matriks {
                 break;
             }
         }
-        if(solvable = false)
+        if(!solvable)
         {
             System.out.println("Sistem persamaan linear tidak ada solusi.");
             solution = null;
@@ -215,4 +219,78 @@ public class Matriks {
         solution = x;
         return solution;
     }
+
+    public double[][] splGaussJordan() {
+        for (int i=0;i<brs;i++)
+        {
+            int notzeroi = i;
+            int notzeroj = i;
+            boolean notZero = false;
+            for (int i1=i; i1<brs;i1++)
+            {
+                for (int j1=i;j1<kol;j1++)
+                {
+                    if (m[i1][j1] != 0)
+                    {
+                        notZero = true;
+                        notzeroi = i1;
+                        notzeroj = j1;
+                        break;
+                    }
+                }
+                if (notZero) {
+                    break;
+                }
+            }
+            if (!notZero){
+                break;
+            }
+            double temp;
+            // menukar baris jika baris yg seharusnya ada kolom ada 1 berisi 0
+            if (notzeroi != i) 
+            {
+                for (int j = 0; j<kol;j++)
+                {
+                    temp = m[i][j];
+                    m[i][j] = m[notzeroi][j];
+                    m[i][j] = temp;
+                }
+                notzeroi = i;
+            }
+            
+            // membagi baris agar yang paling depan 1
+            double head = m[notzeroi][notzeroj];
+            if(head!=0)
+            {
+                for (int j=0;j<kol;j++)
+                {
+                    m[i][j] = m[i][j]/head;
+                }
+            }
+
+            // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
+            if (i<kol-1)
+            {
+                for (int i1=i+1;i1<brs;i1++)
+                {
+                    double konstanta = m[i1][notzeroj];
+                    for (int j1=notzeroj;j1<kol;j1++)
+                    {
+                        m[i1][j1] -= m[notzeroi][j1]*konstanta;
+                    }
+                }
+            }   
+        }
+        for(int i=brs-1;i>0;i--)
+        {
+            for(int i1=i-1;i1>=0;i1--)
+            {
+                double konstanta = m[i1][i];
+                m[i1][i] -= konstanta*m[i][i];
+                m[i1][kol-1] -= konstanta*m[i][kol-1];
+            }
+        }
+        return m;
+    }
+    
 }
