@@ -12,7 +12,7 @@ public class Driver {
 
         System.out.println("Isi matriks:");
         m1.bacaMatriks();
-        m1.splGaussJordan();
+        m1.splGauss();
         
         System.out.println("Hasil matriks:");
         m1.tulisMatriks();

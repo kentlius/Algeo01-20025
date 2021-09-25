@@ -31,6 +31,17 @@ public class Matriks {
             System.out.println();
         }
     }
+
+    public double[][] swapBaris(int baris1, int baris2, double m[][]){
+        double temp;
+        for(int j=0;j<kol;j++)
+        {
+            temp = m[baris1][j];
+            m[baris1][j] = m[baris2][j];
+            m[baris2][j] = temp;
+        }
+        return m;
+    }
     
     public double[][] splGauss() {
         // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
@@ -39,38 +50,27 @@ public class Matriks {
             int notzeroi = i;
             int notzeroj = i;
             boolean notZero = false;
-            for (int i1=i; i1<brs;i1++)
+            for(int j=0;j<kol-1;j++)
             {
-                for (int j1=i;j1<kol;j1++)
+                if (m[i][j] == 0)
                 {
-                    if (m[i1][j1] != 0)
+                    for(int i1=i;i1<brs;i1++)
                     {
-                        notZero = true;
-                        notzeroi = i1;
-                        notzeroj = j1;
-                        break;
+                        if(m[i1][j]!=0)
+                        // melakukan pertukaran baris
+                        {
+                            m = swapBaris(i, i1, m);
+                            notZero = true;
+                            break;
+                        }
                     }
-                }
-                if (notZero) {
+                if (notZero)
+                {
                     break;
                 }
-            }
-            if (!notZero){
-                break;
-            }
-            double temp;
-            // menukar baris jika baris yg seharusnya ada kolom ada 1 berisi 0
-            if (notzeroi != i) 
-            {
-                for (int j = 0; j<kol;j++)
-                {
-                    temp = m[i][j];
-                    m[i][j] = m[notzeroi][j];
-                    m[i][j] = temp;
                 }
-                notzeroi = i;
             }
-            
+
             // membagi baris agar yang paling depan 1
             double head = m[notzeroi][notzeroj];
             if(head!=0)
@@ -106,12 +106,12 @@ public class Matriks {
         boolean solvable = true;
         for (int i=0;i<brs;i++){
             banyakzero = 0;
-            for (int j=0;j<kol-1;j++){
+            for (int j=0;j<kol;j++){
                 if (m[i][j]==0){
                     banyakzero += 1;
                 }
             }
-            if(banyakzero==kol-1){
+            if(banyakzero == kol-1){
                 solvable = false;
                 break;
             }
@@ -121,8 +121,16 @@ public class Matriks {
             System.out.println("Sistem persamaan linear tidak ada solusi.");
             solution = null;
         } else{
+            boolean hanyaAngka = true;
+            for(int i=0;i<brs;i++)
+            {
+                if (m[i][i]==0)
+                {
+                    hanyaAngka = false;
+                }
+            }
             // solusi hanya dalam bentuk angka
-            if (brs == kol-1){
+            if ((brs == kol-1) && (hanyaAngka==true)){
                 for(int i=kol-2;i>=0;i--){
                     if(i==kol-2){
                         x[i] = Double.toString(m[i][kol-1]);
@@ -155,18 +163,19 @@ public class Matriks {
                         }
                     }
                 }
+                
                 for (int i=0;i<(kol-1);i++)
-                {
-                    x[i] = "0.0";
-                }
-
-                for (int i=0; i<(kol-1); i++)
                 {
                     if(variabel[i])
                     {
                         x[i] = ("x" + (i+1));
                     }
+                    else
+                    {
+                        x[i] = "0.0";
+                    }
                 }
+
                 
                 // Menjumlahkan hanya yang dalam bentuk angka
                 for (int i=brs-1;i>=0;i--)
@@ -206,8 +215,9 @@ public class Matriks {
                                     variabelk[i] += (m[i][j] * variabelk[j]);
                                 }
                             }
-                            x[i] += (" + " + Double.toString(variabelk[i]) + " " + x[k]);
+                            x[i] += (" + " + Double.toString(variabelk[i]) + " " + x[k]);                               
                         }
+
                     }
                 }
             }
