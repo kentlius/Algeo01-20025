@@ -1,32 +1,30 @@
 import java.util.Scanner;
 
 public class Matriks {
-    public int n;
-    public double m[][]=new double[100][100];
+    public int brs;
+    public int kol;
+    public double m[][];
 
-    public void buatMatriks(int n){
-        this.n=n;
-        for (int i = 0; i < n;i++) 
-            for (int j = 0; j < n; j++) 
-                this.m[i][j] = 0.0;
+    Matriks(int baris, int kolom){
+        brs=baris;
+        kol=kolom;
+        m=new double[baris][kolom];
     }
 
     public void bacaMatriks() {
         Scanner input = new Scanner(System.in);
         int i,j;
-        for(i=0;i<this.n;i++)
-            for(j=0;j<this.n;j++)
-                this.m[i][j]=input.nextDouble();
-        
-        input.close();
+        for(i=0;i<brs;i++)
+            for(j=0;j<kol;j++)
+                m[i][j]=input.nextDouble();
     }
 
     public void tulisMatriks(){
         int i,j;
 
-        for(i=0;i<this.n;++i)
+        for(i=0;i<brs;++i)
         {
-            for(j=0;j<this.n;++j)
+            for(j=0;j<kol;++j)
             {
                 System.out.print(m[i][j]+" ");
             }
