@@ -34,9 +34,9 @@ public class Matriks {
         }
     }
     
-    public static double[][] splGauss(double[][] arr) {
-        int baris = arr.length;
-        int kolom = arr[0].length;
+    public static double[][] splGauss(double[][] m) {
+        int baris = m.length;
+        int kolom = m[0].length;
         
         // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
         for (int i=0;i<baris;i++)
@@ -48,7 +48,7 @@ public class Matriks {
             {
                 for (int j1=i;j1<kolom;j1++)
                 {
-                    if (arr[i1][j1] != 0)
+                    if (m[i1][j1] != 0)
                     {
                         notZero = true;
                         notzeroi = i1;
@@ -69,18 +69,18 @@ public class Matriks {
             {
                 for (int j = 0; j<kolom;j++)
                 {
-                    temp = arr[i][j];
-                    arr[i][j] = arr[notzeroi][j];
-                    arr[i][j] = temp;
+                    temp = m[i][j];
+                    m[i][j] = m[notzeroi][j];
+                    m[i][j] = temp;
                 }
                 notzeroi = i;
             }
             
             // membagi baris agar yang paling depan 1
-            double head = arr[notzeroi][notzeroj];
+            double head = m[notzeroi][notzeroj];
             for (int j=0;j<kolom;j++)
             {
-                arr[i][j] = arr[i][j]/head;
+                m[i][j] = m[i][j]/head;
             }
 
             // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
@@ -88,24 +88,24 @@ public class Matriks {
             {
                 for (int i1=i+1;i1<baris;i1++)
                 {
-                    double konstanta = arr[i1][notzeroj];
+                    double konstanta = m[i1][notzeroj];
                     for (int j1=notzeroj;j1<kolom;j1++)
                     {
-                        arr[i1][j1] -= arr[notzeroi][j1]*konstanta;
+                        m[i1][j1] -= m[notzeroi][j1]*konstanta;
                     }
                 }
             }   
         }
-        return arr;
+        return m;
     }
     
     
     
-    public static String[] solveGauss(double[][] arr)
+    public static String[] solveGauss(double[][] m)
     {
-        arr = splGauss(arr);
-        int baris = arr.length;
-        int kolom = arr[0].length;
+        m = splGauss(m);
+        int baris = m.length;
+        int kolom = m[0].length;
         boolean solvable = true;
         String[] solution = new String[kolom-1];
         String x[] = new String[kolom-1];
@@ -113,7 +113,7 @@ public class Matriks {
         for (int i=0;i<baris;i++){
             int banyakzero = 0;
             for (int j=0;j<kolom;j++){
-                if (arr[i][j]==0){
+                if (m[i][j]==0){
                     banyakzero +=1;
                 }
             }
@@ -131,11 +131,11 @@ public class Matriks {
             if (baris == kolom-1){
                 for(int i=kolom-2;i>=0;i--){
                     if(i==kolom-2){
-                        x[i] = Double.toString(arr[i][kolom-1]);
+                        x[i] = Double.toString(m[i][kolom-1]);
                     } else {
-                        double temp = arr[i][kolom-1];
+                        double temp = m[i][kolom-1];
                         for(int j=i+1;j<kolom-1;j++){
-                            temp -= arr[i][j]*Double.valueOf(x[j]);
+                            temp -= m[i][j]*Double.valueOf(x[j]);
                         }
                         x[i] = Double.toString(temp);
                     }
@@ -154,7 +154,7 @@ public class Matriks {
                 {
                     for (int j=0; j<(kolom-1);j++)
                     {
-                        if (arr[i][j]==1)
+                        if (m[i][j]==1)
                         {
                             variabel[j] = false;
                             break;
@@ -176,12 +176,12 @@ public class Matriks {
                 // Menjumlahkan hanya yang dalam bentuk angka
                 for (int i=baris-1;i>=0;i--)
                 {
-                    double temp = arr[i][kolom-1];
+                    double temp = m[i][kolom-1];
                     if(i<baris-1)
                     {
                         for(int j=i+1;j<baris;j++)
                         {
-                            temp -= arr[i][j]*Double.valueOf(x[j]);
+                            temp -= m[i][j]*Double.valueOf(x[j]);
                         }
                         x[i] = Double.toString(temp);
                     }
@@ -201,14 +201,14 @@ public class Matriks {
                         {
                             if(i == baris-1)
                             {
-                                variabelk[i] = arr[i][k];
+                                variabelk[i] = m[i][k];
                             }
                             else
                             {
-                                variabelk[i] = arr[i][k];
+                                variabelk[i] = m[i][k];
                                 for(int j=i+1;j<baris-1;j++)
                                 {
-                                    variabelk[i] += (arr[i][j] * variabelk[j]);
+                                    variabelk[i] += (m[i][j] * variabelk[j]);
                                 }
                             }
                             x[i] += (" + " + Double.toString(variabelk[i]) + x[k]);
