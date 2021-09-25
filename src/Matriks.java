@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Matriks {
@@ -17,6 +19,46 @@ public class Matriks {
         for(i=0;i<brs;i++)
             for(j=0;j<kol;j++)
                 m[i][j]=input.nextDouble();
+    }
+    
+    //error line 49 karna nextLine??
+    public void bacaMatriksTxt() {
+        try 
+        {
+            File file = new File("test/spl.txt");
+
+            Scanner sizeScanner = new Scanner(file);
+            String curr;
+            int temp=0, temp2=0;
+            while(sizeScanner.hasNextLine())
+            {
+                curr=sizeScanner.nextLine();
+                temp = curr.split(" ").length;
+                temp2++;
+            }
+                
+            sizeScanner.close();
+
+            brs = temp;
+            kol = temp2;
+
+            Scanner scanner = new Scanner(file);
+            m = new double[brs][kol];
+            for (int i = 0; i < brs; i++) 
+            {
+                String[] numbers = scanner.nextLine().split(" ");
+                for (int j = 0; j < kol; j++) 
+                {
+                    m[i][j] = Integer.parseInt(numbers[j]);
+                }
+            }
+            scanner.close();
+        }   
+        catch (FileNotFoundException e) 
+        {
+            e.printStackTrace();
+        }
+        
     }
 
     public void tulisMatriks() {
