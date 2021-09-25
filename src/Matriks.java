@@ -156,13 +156,14 @@ public class Matriks {
                     x[i] = "0.0";
                 }
 
-                for (int i=0; i<brs; i++)
+                for (int i=0; i<(kol-1); i++)
                 {
                     if(variabel[i])
                     {
                         x[i] = ("x" + (i+1));
                     }
                 }
+                
                 // Menjumlahkan hanya yang dalam bentuk angka
                 for (int i=brs-1;i>=0;i--)
                 {
@@ -201,7 +202,7 @@ public class Matriks {
                                     variabelk[i] += (m[i][j] * variabelk[j]);
                                 }
                             }
-                            x[i] += (" + " + Double.toString(variabelk[i]) + x[k]);
+                            x[i] += (" + " + Double.toString(variabelk[i]) + "x" + (k-1));
                         }
                     }
                 }
