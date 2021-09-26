@@ -21,8 +21,20 @@ public class Matriks {
                 m[i][j]=input.nextDouble();
     }
     
+    public void bacaMatriksfile(String text, int baris, int kolom) throws Exception {
+        Scanner sc = new Scanner(new BufferedReader(new FileReader("../test/"+text+".txt")));
+        while(sc.hasNextLine()) {
+           for (int i=0; i<baris; i++) {
+              String[] line = sc.nextLine().trim().split(" ");
+              for (int j=0; j<kolom; j++) {
+                 m[i][j] = Integer.parseInt(line[j]);
+              }
+           }
+        }
+     }
+  
     //error line 49 karna nextLine??
-    public void bacaMatriksTxt() {
+    /*public void bacaMatriksTxt() {
         try 
         {
             File file = new File("test/spl.txt");
@@ -59,7 +71,7 @@ public class Matriks {
             e.printStackTrace();
         }
         
-    }
+    }*/
 
     public void tulisMatriks() {
         int i,j;
