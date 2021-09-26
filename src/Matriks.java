@@ -560,16 +560,16 @@ public class Matriks {
             }
         }
         return n;
-    }      
+    }
     public class Determinant {
-        static void Kofaktor(double matriks[][], double temp[][], int p, int q,int n){
-            int i=0, j=0;
-            for (int baris = 0; baris < n; baris++){
-                for(int kolom=0; kolom < n; kolom++){
-                    if(baris != p && kolom != q){
+        static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
+            int i = 0, j = 0;
+            for (int baris = 0; baris < n; baris++) {
+                for (int kolom = 0; kolom < n; kolom++) {
+                    if (baris != p && kolom != q) {
                         temp[i][j++] = matriks[baris][kolom];
-                        if(j == n-1){
-                            j=0;
+                        if (j == n - 1) {
+                            j = 0;
                             i++;
                         }
                     }
@@ -577,18 +577,19 @@ public class Matriks {
             }
         }
 
-        public static double KofaktorDet(double matriks[][], int n){
-            if (n == 2){
-                return ((matriks[0][0]*matriks[1][1]) - (matriks[0][1]*matriks[1][0]));
-            }
-            else {
-                double determinan = 0;
-                double temp[][] = new double[n-1][n-1];
+        public static double KofaktorDet(double matriks[][], int n) {
+            double determinan = 0;
+            if (n == 1) {
+                return matriks[0][0];
+            } else if (n == 2) {
+                return ((matriks[0][0] * matriks[1][1]) * (matriks[0][1] * matriks[1][0]));
+            } else {
+                double temp[][] = new double[n][n];
                 int tanda = 1;
-                for(int baris = 0; baris < n; baris++){
-                    Kofaktor(matriks, temp,0,baris,n);
-                    determinan += tanda * matriks[0][baris] * KofaktorDet(temp,n-1);
-                    tanda = tanda*(-1);
+                for (int f = 0; f < n; f++) {
+                    Kofaktor(matriks, temp, 0, f, n);
+                    determinan += tanda * matriks[0][f] * KofaktorDet(temp, n - 1);
+                    tanda = -tanda;
                 }
                 return determinan;
             }
