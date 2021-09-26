@@ -51,6 +51,13 @@ public class Driver {
                     m1.tulisMatriks();
 
                     System.out.println(m1.solveGauss());
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m1.saveSplSolution(m1.solveGauss(), saveas);
+                    }
                     System.out.print("\n");
                 }
                 if(pilihanspl==2)
@@ -79,6 +86,14 @@ public class Driver {
                     m2.tulisMatriks();
 
                     System.out.println(m2.solveGauss());
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m2.saveSplSolution(m2.solveGauss(), saveas);
+                    }
+                    System.out.print("\n");
                 }
             }
             if (pilihan==2)
@@ -115,7 +130,54 @@ public class Driver {
                         }
                     }
                     double det = m1.KofaktorDet(besar);
-                    System.out.println("Determinan adalah "+det+"\n");
+                    String detsolution = ("Determinan adalah "+det);
+                    System.out.println(detsolution);
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m1.saveStringSolution(detsolution, saveas);
+                    }
+                    System.out.print("\n");
+                }
+                if(pilihandet == 2)
+                {
+                    System.out.print("\nMasukkan besar matriks: ");
+                    int besar = input.nextInt();
+                    Matriks m1 = new Matriks(besar, besar);
+
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m1.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m1.bacaMatriksfile(filename, besar, besar);
+
+                    }
+                    double m2[][] = new double[besar][besar]; 
+                    for (int i=0;i<besar;i++)
+                    {
+                        for (int j=0;j<besar;j++)
+                        {
+                            m2[i][j] = m1.getElm(i,j);
+                        }
+                    }
+                    double det = m1.ReduksiDet(besar);
+                    String detsolution = ("Determinan adalah "+det);
+                    System.out.println(detsolution);
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m1.saveStringSolution(detsolution, saveas);
+                    }
+                    System.out.print("\n");
                 }
             }
             if (pilihan==3)
@@ -154,11 +216,21 @@ public class Driver {
                 System.out.println("Hasil matriks:");
                 mpol.tulisMatriks();
 
-                System.out.println(mpol.solveGauss());
-
-                System.out.print("Dicari f(x) untuk x: ");
+                System.out.print("Dicari f(x) untuk x = ");
                 double x = input.nextInt();
-                System.out.println("f(x)= " + mpol.solvePolinom(x));
+                System.out.println(mpol.printPolinomsolution());
+                String polSolution = "f(x) = " + mpol.solvePolinom(x) + " untuk x = " + x;
+                System.out.println(polSolution);
+                String Result = mpol.printPolinomsolution();
+                Result += ("\n"+polSolution);
+                System.out.println("\nMensave solution(1) atau tidak(0)?");
+                int save = input.nextInt();
+                if (save==1){
+                    System.out.println("Nama file: ");
+                    String saveas = input.next();
+                    mpol.saveStringSolution(Result, saveas);
+                }
+                System.out.print("\n");
             }
         } while (pilihan!=6);
         System.out.println("Aplikasi dimatikan.");
