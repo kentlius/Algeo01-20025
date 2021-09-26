@@ -118,6 +118,19 @@ public class Driver {
                     System.out.println("Determinan adalah "+det+"\n");
                 }
             }
+            if (pilihan==3)
+            {
+                System.out.print("Masukkan baris: ");
+                int baris3 = input.nextInt();
+                System.out.print("Masukkan kolom: ");
+                int kolom3 = input.nextInt();
+                Matriks m3 = new Matriks(baris3, kolom3);
+
+                m3.bacaMatriks();
+                m3.inverseMatriks();
+                m3.tulisMatriks();
+
+            }
             if (pilihan==4)
             {
                 System.out.print("Banyak persamaan: ");
