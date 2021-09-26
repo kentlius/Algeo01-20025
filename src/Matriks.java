@@ -7,7 +7,7 @@ public class Matriks {
     public int kol;
     public double m[][];
 
-    Matriks(int baris, int kolom){
+    public Matriks(int baris, int kolom){
         brs=baris;
         kol=kolom;
         m=new double[baris][kolom];
@@ -507,4 +507,3 @@ public class Matriks {
         }
     }
     
-}
