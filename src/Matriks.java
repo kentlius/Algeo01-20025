@@ -16,6 +16,10 @@ public class Matriks {
         m=new double[baris][kolom];
     }
 
+    public double getElm(int baris1, int kolom1){
+        return m[baris1][kolom1];
+    }
+
     public void bacaMatriks() {
         Scanner input = new Scanner(System.in);
         int i,j;
@@ -576,7 +580,8 @@ public class Matriks {
         }
         return n;
     }
-    public class Determinant {
+    
+    //public class Determinant {
         static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
             int i = 0, j = 0;
             for (int baris = 0; baris < n; baris++) {
@@ -592,22 +597,22 @@ public class Matriks {
             }
         }
 
-        public static double KofaktorDet(double matriks[][], int n) {
+        public double KofaktorDet(int n) {
             double determinan = 0;
             if (n == 1) {
-                return matriks[0][0];
+                return m[0][0];
             } else if (n == 2) {
-                return ((matriks[0][0] * matriks[1][1]) * (matriks[0][1] * matriks[1][0]));
+                return ((m[0][0] * m[1][1]) * (m[0][1] * m[1][0]));
             } else {
                 double temp[][] = new double[n][n];
                 int tanda = 1;
                 for (int f = 0; f < n; f++) {
-                    Kofaktor(matriks, temp, 0, f, n);
-                    determinan += tanda * matriks[0][f] * KofaktorDet(temp, n - 1);
+                    Kofaktor(m, temp, 0, f, n);
+                    determinan += tanda * m[0][f] * KofaktorDet(n - 1);
                     tanda = -tanda;
                 }
                 return determinan;
             }
         }
-    }
+    //}
 }    

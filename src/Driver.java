@@ -81,6 +81,43 @@ public class Driver {
                     System.out.println(m2.solveGauss());
                 }
             }
+            if (pilihan==2)
+            {
+                int pilihandet = 0;
+                System.out.print("\n1. Metode Ekspansi Kofaktor");
+                System.out.print("\n2. Metode Reduksi Baris");
+                System.out.print("\n-> Pilihan: ");
+                pilihandet = input.nextInt();
+                if(pilihandet == 1)
+                {
+                    System.out.print("\nMasukkan besar matriks: ");
+                    int besar = input.nextInt();
+                    Matriks m1 = new Matriks(besar, besar);
+
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m1.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m1.bacaMatriksfile(filename, besar, besar);
+
+                    }
+                    double m2[][] = new double[besar][besar]; 
+                    for (int i=0;i<besar;i++)
+                    {
+                        for (int j=0;j<besar;j++)
+                        {
+                            m2[i][j] = m1.getElm(i,j);
+                        }
+                    }
+                    double det = m1.KofaktorDet(besar);
+                    System.out.println("Determinan adalah "+det+"\n");
+                }
+            }
             if (pilihan==4)
             {
                 System.out.print("Banyak persamaan: ");
