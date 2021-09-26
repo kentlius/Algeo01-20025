@@ -40,7 +40,6 @@ public class Matriks {
            }
         }
      }
-  
 
     public void saveSplSolution(String[] solution, String filename){
         try{
@@ -78,6 +77,7 @@ public class Matriks {
         e.printStackTrace();
         }
     }
+
     public void tulisMatriks() {
         int i,j;
         for(i=0;i<brs;++i)
@@ -635,7 +635,6 @@ public class Matriks {
         return FinalSolution;
     }
 
-    
     //public class Determinant {
     static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
         int i = 0, j = 0;
@@ -729,6 +728,7 @@ public class Matriks {
         }
     }
     
+    //metode inverse
     public static void gaussian(double a[][], int index[]) 
     {
         int n = index.length;
@@ -784,7 +784,7 @@ public class Matriks {
         }
     }
 
-    public double[][] inverseMatriks() {
+    public double[][] inverseMatriksGauss() {
         //identitas matriks
         int n = brs;
         double x[][] = new double[n][n];
@@ -816,5 +816,50 @@ public class Matriks {
         m=x;
         return m;
     }
+  
+    static double determinant(double A[][], int n)
+    {
+        double det = 0;
+        double [][]temp = new double[n][n];
+        double tanda = 1;
+
+        for (int f = 0; f < n; f++)
+        {
+            Kofaktor(A, temp, 0, f, n);
+            det += tanda * A[0][f] * determinant(temp, n - 1);
     
+            tanda = -tanda;
+        }
+        return det;
+    }
+    //masi error
+    public double[][] inverseMatriksAdjoin() {
+        int n=brs;
+        double det=determinant(m,n);
+        
+        double tanda=1;
+        double adj[][] = new double[n][n];
+        double temp[][] = new double[n][n];
+
+        for(int i=0;i<n;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                Kofaktor(m, temp, i, j, n);
+                tanda = ((i + j) % 2 == 0)? 1: -1;
+                adj[j][i] = tanda*determinant(temp, n-1);
+            }
+        }
+
+        for(int i=0;i<n;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                m[i][j]=adj[i][j]/det;
+            }
+        }
+        
+        return m;
+    }
+
 }    

@@ -182,16 +182,30 @@ public class Driver {
             }
             if (pilihan==3)
             {
-                System.out.print("Masukkan baris: ");
-                int baris3 = input.nextInt();
-                System.out.print("Masukkan kolom: ");
-                int kolom3 = input.nextInt();
-                Matriks m3 = new Matriks(baris3, kolom3);
+                int pilihaninv = 0;
+                System.out.print("\n1. Metode Gauss Jordan");
+                System.out.print("\n2. Metode Adjoin");
+                System.out.print("\n-> Pilihan: ");
+                pilihaninv = input.nextInt();
 
-                m3.bacaMatriks();
-                m3.inverseMatriks();
-                m3.tulisMatriks();
-
+                if(pilihaninv==1)
+                {
+                    System.out.print("\nMasukkan besar matriks: ");
+                    int besar = input.nextInt();
+                    Matriks m3 = new Matriks(besar, besar);
+                    m3.bacaMatriks();
+                    m3.inverseMatriksGauss();
+                    m3.tulisMatriks();
+                }
+                if(pilihaninv==2)
+                {
+                    System.out.print("\nMasukkan besar matriks: ");
+                    int besar = input.nextInt();
+                    Matriks m3 = new Matriks(besar, besar);
+                    m3.bacaMatriks();
+                    m3.inverseMatriksAdjoin();
+                    m3.tulisMatriks();
+                }
             }
             if (pilihan==4)
             {
