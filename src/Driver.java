@@ -78,7 +78,7 @@ public class Driver {
                 System.out.println("f(x)= " + mpol.solvePolinom(x));
             }
         } while (pilihan!=6);
-        System.out.println("\nAplikasi dimatikan.");
+        System.out.println("Aplikasi dimatikan.");
         input.close();
     }
 }

@@ -192,6 +192,8 @@ public class Matriks {
         String x[] = new String[kol-1];
         int banyakzero = 0;
         boolean[] variabel = new boolean[kol-1];
+        char[] var = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+        'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
         // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
         boolean solvable = true;
         for (int i=0;i<brs;i++){
@@ -333,13 +335,13 @@ public class Matriks {
                                 {
                                     if(variabelk[i1]>0)
                                     {
-                                        x[i1] += (" + " + Double.toString(variabelk[i1]) + "  x" + (k+1));  
+                                        x[i1] += (" + " + Double.toString(variabelk[i1]) + "  " + var[k]);  
                                         break;                             
                                     }
                                     if(variabelk[i1]<0)
                                     {
                                         variabelk[i1] *= -1;
-                                        x[i1] += (" - " + Double.toString(variabelk[i1]) + "  x" + (k+1));
+                                        x[i1] += (" - " + Double.toString(variabelk[i1]) + "  " + var[k]);
                                         break;
                                     }
                                 }     
@@ -349,11 +351,12 @@ public class Matriks {
                 }
             }
         }
+
         for(int i = 0; i < x.length; ++i)
         {
             if (variabel[i])
             {
-                 System.out.println("x" + (i+1) + " = " + "x" + (i+1));
+                 System.out.println("x" + (i+1) + " = " + var[i]);
             }
             else
             {
