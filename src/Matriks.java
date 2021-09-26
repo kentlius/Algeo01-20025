@@ -1,9 +1,10 @@
-//import java.io.File;
+import java.io.File;
+import java.io.IOException;
 //import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
-
+import java.io.FileWriter;
 
 public class Matriks {
     public int brs;
@@ -40,6 +41,43 @@ public class Matriks {
         }
      }
   
+
+    public void saveSplSolution(String[] solution, String filename){
+        try{
+        File myObj = new File("../test/"+filename+".txt");
+        if (myObj.createNewFile()) {
+            System.out.println("File created: " + myObj.getName());
+            FileWriter writer = new FileWriter("../test/"+filename+".txt");
+
+            for(int i=0;i<kol-1;i++) {
+                writer.write(solution[i] + System.lineSeparator());
+            }
+            writer.close();
+        } else {
+            System.out.println("File already exists.");
+        }
+    } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+        }
+    }
+    
+    public void saveStringSolution(String solution, String filename){
+        try{
+        File myObj = new File("../test/"+filename+".txt");
+        if (myObj.createNewFile()) {
+            System.out.println("File created: " + myObj.getName());
+            FileWriter writer = new FileWriter("../test/"+filename+".txt");
+            writer.write(solution);
+            writer.close();
+        } else {
+            System.out.println("File already exists.");
+        }
+    } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+        }
+    }
     public void tulisMatriks() {
         int i,j;
         for(i=0;i<brs;++i)
@@ -532,6 +570,7 @@ public class Matriks {
                     }
                 }
             }
+
             double pengali = n;
             n = 0;
             for(int i = 0; i < x.length; ++i)
@@ -541,6 +580,61 @@ public class Matriks {
         }
         return n;
     }
+
+    public String printPolinomsolution(){
+        String x[] = new String[kol-1];
+        int banyakzero = 0;
+        // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
+        boolean solvable = true;
+        for (int i=0;i<brs;i++){
+            banyakzero = 0;
+            for (int j=0;j<kol;j++){
+                if (m[i][j]==0){
+                    banyakzero += 1;
+                }
+            }
+            if(banyakzero == kol-1){
+                solvable = false;
+                break;
+            }
+        }
+        if(!solvable)
+        {
+            System.out.println("Sistem persamaan linear tidak ada solusi.");
+            x = null;
+        } else{
+            boolean hanyaAngka = true;
+            for(int i=0;i<brs;i++)
+            {
+                if (m[i][i]==0)
+                {
+                    hanyaAngka = false;
+                }
+            }
+            // solusi hanya dalam bentuk angka
+            if ((brs == kol-1) && (hanyaAngka==true)){
+                for(int i=kol-2;i>=0;i--){
+                    if(i==kol-2){
+                        x[i] = Double.toString(m[i][kol-1]);
+                    } else {
+                        double temp = m[i][kol-1];
+                        for(int j=i+1;j<kol-1;j++){
+                            temp -= m[i][j]*Double.valueOf(x[j]);
+                        }
+                        x[i] = Double.toString(temp);
+                    }
+                }
+            }
+
+        }
+        String FinalSolution = ("f(x) = "+x[0] +" x^0");
+        for(int i = 1; i<x.length; i++)
+        {
+            FinalSolution += (" + "+x[i]+" x^"+i);
+        }
+        return FinalSolution;
+    }
+
     
     //public class Determinant {
     static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
@@ -619,15 +713,15 @@ public class Matriks {
         return jumlah;
     }
 
-    public static double ReduksiDet(double matriks[][], int n) {
+    public double ReduksiDet(int n) {
         double temp[][] = new double[n][n];
-        salinMatriks(matriks, temp, n);
-        double jumlah = reduksiBaris(matriks, n);
-        double detereminan = matriks[0][0];
+        salinMatriks(m, temp, n);
+        double jumlah = reduksiBaris(m, n);
+        double detereminan = m[0][0];
         for (int i = 1; i < n; i++) {
-            detereminan *= matriks[i][i];
+            detereminan *= m[i][i];
         }
-        salinMatriks(temp, matriks, n);
+        salinMatriks(temp, m, n);
         if (jumlah % 2 == 0) {
             return detereminan;
         } else {
