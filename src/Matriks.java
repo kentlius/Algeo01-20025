@@ -582,37 +582,96 @@ public class Matriks {
     }
     
     //public class Determinant {
-        static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
-            int i = 0, j = 0;
-            for (int baris = 0; baris < n; baris++) {
-                for (int kolom = 0; kolom < n; kolom++) {
-                    if (baris != p && kolom != q) {
-                        temp[i][j++] = matriks[baris][kolom];
-                        if (j == n - 1) {
-                            j = 0;
-                            i++;
-                        }
+    static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
+        int i = 0, j = 0;
+        for (int baris = 0; baris < n; baris++) {
+            for (int kolom = 0; kolom < n; kolom++) {
+                if (baris != p && kolom != q) {
+                    temp[i][j++] = matriks[baris][kolom];
+                    if (j == n - 1) {
+                        j = 0;
+                        i++;
                     }
                 }
             }
         }
+    }
 
-        public double KofaktorDet(int n) {
-            double determinan = 0;
-            if (n == 1) {
-                return m[0][0];
-            } else if (n == 2) {
-                return ((m[0][0] * m[1][1]) * (m[0][1] * m[1][0]));
-            } else {
-                double temp[][] = new double[n][n];
-                int tanda = 1;
-                for (int f = 0; f < n; f++) {
-                    Kofaktor(m, temp, 0, f, n);
-                    determinan += tanda * m[0][f] * KofaktorDet(n - 1);
-                    tanda = -tanda;
-                }
-                return determinan;
+    public double KofaktorDet(int n) {
+        double determinan = 0;
+        if (n == 1) {
+            return m[0][0];
+        } else if (n == 2) {
+            return ((m[0][0] * m[1][1]) * (m[0][1] * m[1][0]));
+        } else {
+            double temp[][] = new double[n][n];
+            int tanda = 1;
+            for (int f = 0; f < n; f++) {
+                Kofaktor(m, temp, 0, f, n);
+                determinan += tanda * m[0][f] * KofaktorDet(n - 1);
+                tanda = -tanda;
+            }
+            return determinan;
+        }
+    }
+
+    static void tukarBaris(double matriks[][], int n, int a, int b) {
+        double temp[] = new double[n];
+        for (int j = 0; j < n; j++) {
+            temp[j] = matriks[a][j];
+            matriks[a][j] = matriks[b][j];
+            matriks[b][j] = temp[j];
+        }
+    }
+
+    static void salinMatriks(double matriks[][], double temp[][], int n) {
+        for (int baris = 0; baris < n; baris++) {
+            for (int kolom = 0; kolom < n; kolom++) {
+                temp[baris][kolom] = matriks[baris][kolom];
             }
         }
+    }
+
+    public static double reduksiBaris(double matriks[][], int n) {
+        int i = 0, l = 0, index;
+        double kurang;
+        int jumlah = 0;
+        for (int j = 1; j < n; j++) {
+            for (int h = j; h < n; h++) {
+                index = i + 1;
+                while ((matriks[i][l] == 0) && (index < n)) {
+                    tukarBaris(matriks, n, i, index);
+                    jumlah++;
+                    index++;
+                }
+                if (index == n) {
+                    continue;
+                }
+                kurang = matriks[h][l] / matriks[i][l];
+                for (int k = l; k < n; k++) {
+                    matriks[h][k] -= matriks[i][k] * kurang;
+                }
+            }
+            i++;
+            l++;
+        }
+        return jumlah;
+    }
+
+    public static double ReduksiDet(double matriks[][], int n) {
+        double temp[][] = new double[n][n];
+        salinMatriks(matriks, temp, n);
+        double jumlah = reduksiBaris(matriks, n);
+        double detereminan = matriks[0][0];
+        for (int i = 1; i < n; i++) {
+            detereminan *= matriks[i][i];
+        }
+        salinMatriks(temp, matriks, n);
+        if (jumlah % 2 == 0) {
+            return detereminan;
+        } else {
+            return -detereminan;
+        }
+    }
     //}
 }    
