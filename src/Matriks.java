@@ -63,7 +63,6 @@ public class Matriks {
 
     public void tulisMatriks() {
         int i,j;
-
         for(i=0;i<brs;++i)
         {
             for(j=0;j<kol;++j)
@@ -85,7 +84,7 @@ public class Matriks {
         return m;
     }
     
-        public double[][] removeLastRow(double m[][]){    
+    public double[][] removeLastRow(double m[][]){    
         double m1[][] = new double[brs-1][kol];
         for (int i=0;i<brs-1;i++)
         {
@@ -98,6 +97,10 @@ public class Matriks {
         return m1;
     }
     
+    public double[][] tambahKolom(double m[][]){
+        double m1[][] = new double[brs][kol+1];
+        return m1;
+    }
     public double[][] splGauss() {
         // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
         for (int i=0;i<brs;i++)
@@ -470,9 +473,91 @@ public class Matriks {
         }
         return m;
     }
-    
-}
 
+    public double[][] polinomMatriks() {
+    // Mengubah input polinom ke bentuk matriks untuk diselesaikan
+        double m1[][] = new double[brs][kol];
+        int n = brs;
+        for (int i=kol;i<brs+1;i++)
+        {
+            m1 = tambahKolom(m1);
+            kol += 1;
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                m1[i][j] = Math.pow(m[i][0],j);
+            }
+            m1[i][n] = m[i][1];
+        }
+        for (int i=0;i<kol-3;i++)
+        {
+            m = tambahKolom(m);
+        }
+        for(int i=0;i<brs;i++)
+        {
+            for(int j=0;j<kol;j++)
+            {
+                m[i][j] = m1[i][j];
+            }
+        }
+        return m;
+    }
+    
+    public double solvePolinom(double n){
+        String x[] = new String[kol-1];
+        int banyakzero = 0;
+        // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
+        boolean solvable = true;
+        for (int i=0;i<brs;i++){
+            banyakzero = 0;
+            for (int j=0;j<kol;j++){
+                if (m[i][j]==0){
+                    banyakzero += 1;
+                }
+            }
+            if(banyakzero == kol-1){
+                solvable = false;
+                break;
+            }
+        }
+        if(!solvable)
+        {
+            System.out.println("Sistem persamaan linear tidak ada solusi.");
+            x = null;
+        } else{
+            boolean hanyaAngka = true;
+            for(int i=0;i<brs;i++)
+            {
+                if (m[i][i]==0)
+                {
+                    hanyaAngka = false;
+                }
+            }
+            // solusi hanya dalam bentuk angka
+            if ((brs == kol-1) && (hanyaAngka==true)){
+                for(int i=kol-2;i>=0;i--){
+                    if(i==kol-2){
+                        x[i] = Double.toString(m[i][kol-1]);
+                    } else {
+                        double temp = m[i][kol-1];
+                        for(int j=i+1;j<kol-1;j++){
+                            temp -= m[i][j]*Double.valueOf(x[j]);
+                        }
+                        x[i] = Double.toString(temp);
+                    }
+                }
+            }
+            double pengali = n;
+            n = 0;
+            for(int i = 0; i < x.length; ++i)
+            {
+                n += Double.valueOf(x[i])*(Math.pow(pengali,i));
+            }
+        }
+        return n;
+    }      
     public class Determinant {
         static void Kofaktor(double matriks[][], double temp[][], int p, int q,int n){
             int i=0, j=0;
@@ -506,4 +591,4 @@ public class Matriks {
             }
         }
     }
-    
+}    

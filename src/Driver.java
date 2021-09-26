@@ -58,6 +58,25 @@ public class Driver {
                     System.out.println(m2.solveGauss());
                 }
             }
+            if (pilihan==4)
+            {
+                System.out.print("Banyak persamaan: ");
+                int n = input.nextInt();
+                Matriks mpol = new Matriks(n,2);
+                mpol.bacaMatriks();
+                mpol.polinomMatriks();
+                System.out.println("Persamaan matriks dalam SPL:");
+                mpol.tulisMatriks();
+                mpol.splGauss();
+                System.out.println("Hasil matriks:");
+                mpol.tulisMatriks();
+
+                System.out.println(mpol.solveGauss());
+
+                System.out.print("Dicari f(x) untuk x: ");
+                double x = input.nextInt();
+                System.out.println("f(x)= " + mpol.solvePolinom(x));
+            }
         } while (pilihan!=6);
         System.out.println("\nAplikasi dimatikan.");
         input.close();
