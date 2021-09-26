@@ -40,46 +40,6 @@ public class Matriks {
         }
      }
   
-    //error line 49 karna nextLine??
-    /*public void bacaMatriksTxt() {
-        try 
-        {
-            File file = new File("test/spl.txt");
-
-            Scanner sizeScanner = new Scanner(file);
-            String curr;
-            int temp=0, temp2=0;
-            while(sizeScanner.hasNextLine())
-            {
-                curr=sizeScanner.nextLine();
-                temp = curr.split(" ").length;
-                temp2++;
-            }
-                
-            sizeScanner.close();
-
-            brs = temp;
-            kol = temp2;
-
-            Scanner scanner = new Scanner(file);
-            m = new double[brs][kol];
-            for (int i = 0; i < brs; i++) 
-            {
-                String[] numbers = scanner.nextLine().split(" ");
-                for (int j = 0; j < kol; j++) 
-                {
-                    m[i][j] = Integer.parseInt(numbers[j]);
-                }
-            }
-            scanner.close();
-        }   
-        catch (FileNotFoundException e) 
-        {
-            e.printStackTrace();
-        }
-        
-    }*/
-
     public void tulisMatriks() {
         int i,j;
         for(i=0;i<brs;++i)
@@ -120,6 +80,7 @@ public class Matriks {
         double m1[][] = new double[brs][kol+1];
         return m1;
     }
+    
     public double[][] splGauss() {
         // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
         for (int i=0;i<brs;i++)
