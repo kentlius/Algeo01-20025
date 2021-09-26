@@ -42,7 +42,7 @@ public class Driver {
                     else if(pembaca == 1){
                         System.out.println("Nama text: ");
                         filename = input.next();
-                        m1.bacaMatriksText(filename, baris1, kolom1);
+                        m1.bacaMatriksfile(filename, baris1, kolom1);
 
                     }
                     m1.splGauss();
