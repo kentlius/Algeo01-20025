@@ -85,6 +85,19 @@ public class Matriks {
         return m;
     }
     
+        public double[][] removeLastRow(double m[][]){    
+        double m1[][] = new double[brs-1][kol];
+        for (int i=0;i<brs-1;i++)
+        {
+            for (int j=0; j<kol;j++)
+            {
+                m1[i][j] = m[i][j];
+            }
+        }
+        brs -= 1;
+        return m1;
+    }
+    
     public double[][] splGauss() {
         // mencari elemen yang bukan 0 untuk penentuan pertukaran baris
         for (int i=0;i<brs;i++)
@@ -106,23 +119,37 @@ public class Matriks {
                             break;
                         }
                     }
-                if (notZero)
+                }
+                else
+                {
+                    for(int i1=i;i1<brs;i1++)
+                    {
+                        if(m[i1][j]==0)
+                        {
+                            notZero = true;
+                            break;
+                        }
+                    }
+                }
+                if(notZero)
                 {
                     break;
-                }
                 }
             }
 
             // membagi baris agar yang paling depan 1
-            double head = m[notzeroi][notzeroj];
-            if(head!=0)
+            for(notzeroj=notzeroi;notzeroj<kol-1;notzeroj++)
             {
-                for (int j=0;j<kol;j++)
+                double head = m[notzeroi][notzeroj];
+                if(head!=0)
                 {
-                    m[i][j] = m[i][j]/head;
+                    for (int j=0;j<kol;j++)
+                    {
+                        m[i][j] = m[i][j]/head;
+                    }
+                    break;
                 }
             }
-
             // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
             if (i<kol-1)
             {
@@ -134,7 +161,24 @@ public class Matriks {
                         m[i1][j1] -= m[notzeroi][j1]*konstanta;
                     }
                 }
-            }   
+            }
+             
+        }
+        // Menghapus baris terakhir jika bukan baris efisien (semuanya bernilai 0)
+        for(int i=brs-1;i>=0;i--)
+        {
+            int banyakzero = 0;
+            for(int j=0;j<kol;j++)
+            {
+                if(m[i][j]==0)
+                {
+                    banyakzero += 1;
+                }
+            }
+            if(banyakzero == kol)
+            {
+                m = removeLastRow(m);
+            }
         }
         return m;
     }
@@ -220,53 +264,84 @@ public class Matriks {
 
                 
                 // Menjumlahkan hanya yang dalam bentuk angka
-                for (int i=brs-1;i>=0;i--)
+                int lastnonv = kol-2;
+                for (int i=(brs-1);i>=0;i--)
                 {
-                    double temp = m[i][kol-1];
-                    if(i<brs-1)
+                    for (int i1=lastnonv-1;i1>=i;i1--)
                     {
-                        for(int j=i+1;j<brs;j++)
+                        if(!variabel[i1])
                         {
-                            temp -= m[i][j]*Double.valueOf(x[j]);
+                            double temp = m[i][kol-1];
+                            if(i1<kol-2)
+                            {
+                                for(int j=(i1+1);j<kol-1;j++)
+                                {
+                                    if(!variabel[j])
+                                    {
+                                        temp -= m[i][j]*Double.valueOf(x[j]);
+                                    }
+                                }
+                                x[i1] = Double.toString(temp);
+                                lastnonv = i1;
+                            }
+                            else
+                            {
+                                x[i1] = Double.toString(temp);
+                                lastnonv = i1;
+                            }
+                            break;
                         }
-                        x[i] = Double.toString(temp);
-                    }
-                    else
-                    {
-                        x[i] = Double.toString(temp);
                     }
                 }
 
                 // Menjumlahkan variabel ke dalam jawaban
-                for(int k=0;k<kol-1;k++)
+                for(int k=kol-2;k>=0;k--)
                 {
                     if(variabel[k])
                     {
                         double variabelk[] = new double[kol-1];
+                        lastnonv = k;
                         for(int i=brs-1;i>=0;i--)
-                        {
-                            if(i == brs-1)
+                        {   
+                            for(int i1=lastnonv-1;i1>=0;i1--)
                             {
-                                variabelk[i] = -1*m[i][k];
-                            }
-                            else
-                            {
-                                variabelk[i] = -1*m[i][k];
-                                for(int j=i+1;j<brs-1;j++)
+                                
+                                if(i == brs-1)
                                 {
-                                    variabelk[i] += (m[i][j] * variabelk[j]);
+                                    variabelk[i1] = -1*m[i][k];
+                                    if(!variabel[i1])
+                                    {
+                                        lastnonv = i1;
+                                    }
+                                } 
+                                else
+                                {
+                                    variabelk[i1] = -1*m[i][k];
+                                    for(int j=i1+1;j<k;j++)
+                                    {
+                                        variabelk[i1] -= (m[i][j] * variabelk[j]);
+                                    }
+                                    if(!variabel[i1])
+                                    {
+                                        lastnonv = i1;
+                                    }
                                 }
+                                if(!variabel[i1])
+                                {
+                                    if(variabelk[i1]>0)
+                                    {
+                                        x[i1] += (" + " + Double.toString(variabelk[i1]) + "  x" + (k+1));  
+                                        break;                             
+                                    }
+                                    if(variabelk[i1]<0)
+                                    {
+                                        variabelk[i1] *= -1;
+                                        x[i1] += (" - " + Double.toString(variabelk[i1]) + "  x" + (k+1));
+                                        break;
+                                    }
+                                }     
                             }
-                            if(variabelk[i]>0)
-                            {
-                                x[i] += (" + " + Double.toString(variabelk[i]) + "  x" + (k+1));                               
-                            }
-                            if(variabelk[i]<0)
-                            {
-                                variabelk[i] *= -1;
-                                x[i] += (" - " + Double.toString(variabelk[i]) + "  x" + (k+1));
-                            }
-                        }
+                        }   
                     }
                 }
             }
@@ -292,48 +367,51 @@ public class Matriks {
             int notzeroi = i;
             int notzeroj = i;
             boolean notZero = false;
-            for (int i1=i; i1<brs;i1++)
+            for(int j=0;j<kol-1;j++)
             {
-                for (int j1=i;j1<kol;j1++)
+                if (m[i][j] == 0)
                 {
-                    if (m[i1][j1] != 0)
+                    for(int i1=i;i1<brs;i1++)
                     {
-                        notZero = true;
-                        notzeroi = i1;
-                        notzeroj = j1;
-                        break;
+                        if(m[i1][j]!=0)
+                        // melakukan pertukaran baris
+                        {
+                            m = swapBaris(i, i1, m);
+                            notZero = true;
+                            break;
+                        }
                     }
                 }
-                if (notZero) {
+                else
+                {
+                    for(int i1=i;i1<brs;i1++)
+                    {
+                        if(m[i1][j]==0)
+                        {
+                            notZero = true;
+                            break;
+                        }
+                    }
+                }
+                if(notZero)
+                {
                     break;
                 }
             }
-            if (!notZero){
-                break;
-            }
-            double temp;
-            // menukar baris jika baris yg seharusnya ada kolom ada 1 berisi 0
-            if (notzeroi != i) 
-            {
-                for (int j = 0; j<kol;j++)
-                {
-                    temp = m[i][j];
-                    m[i][j] = m[notzeroi][j];
-                    m[i][j] = temp;
-                }
-                notzeroi = i;
-            }
-            
-            // membagi baris agar yang paling depan 1
-            double head = m[notzeroi][notzeroj];
-            if(head!=0)
-            {
-                for (int j=0;j<kol;j++)
-                {
-                    m[i][j] = m[i][j]/head;
-                }
-            }
 
+            // membagi baris agar yang paling depan 1
+            for(notzeroj=notzeroi;notzeroj<kol-1;notzeroj++)
+            {
+                double head = m[notzeroi][notzeroj];
+                if(head!=0)
+                {
+                    for (int j=0;j<kol;j++)
+                    {
+                        m[i][j] = m[i][j]/head;
+                    }
+                    break;
+                }
+            }
             // mengurangi baris dibawahnya hingga 0 menjadi eselon baris
             if (i<kol-1)
             {
@@ -345,21 +423,56 @@ public class Matriks {
                         m[i1][j1] -= m[notzeroi][j1]*konstanta;
                     }
                 }
-            }   
+            }
+             
         }
-        for(int i=kol-2;i>0;i--)
+        for(int i=brs-1;i>0;i--)
         {
-            for(int i1=i-1;i1>=0;i1--)
+            for(int i1=0;i1<=kol-1;i1++)
             {
-                double konstanta = m[i1][i];
-                for(int j=i;j<kol;j++)
+                if(m[i][i1]!=0)
                 {
-                    m[i1][j] -= konstanta*m[i][j];
+                    for(int iZ=i-1;iZ>=0;iZ--)
+                    {
+                        if(m[iZ][i1]!=0)
+                        {
+                            System.out.println("pengurangan di baris ke "+ (iZ+1) +" kolom ke "+ (i1+1));
+                            for(int i2=i-1;i2>=0;i2--)
+                            {
+                                double konstanta = m[i2][i1];
+                                for(int j=i1;j<kol;j++)
+                                {
+                                    m[i2][j] -= m[i][j]*konstanta;
+                                }
+                            }
+                            break;   
+                        }
+                    }
+                    break;
                 }
+            }
+        }
+        
+        // Menghapus baris terakhir jika tidak efisien (semuanya bernilai 0)
+        for(int i=brs-1;i>=0;i--)
+        {
+            int banyakzero = 0;
+            for(int j=0;j<kol;j++)
+            {
+                if(m[i][j]==0)
+                {
+                    banyakzero += 1;
+                }
+            }
+            if(banyakzero == kol)
+            {
+                m = removeLastRow(m);
             }
         }
         return m;
     }
+    
+}
 
     public class Determinant {
         static void Kofaktor(double matriks[][], double temp[][], int p, int q,int n){
