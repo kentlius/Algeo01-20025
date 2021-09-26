@@ -61,8 +61,18 @@ public class Driver {
                     int kolom2 = input.nextInt();
                     Matriks m2 = new Matriks(baris2, kolom2);
 
-                    System.out.println("Isi matriks:");
-                    m2.bacaMatriks();
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m2.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m2.bacaMatriksfile(filename, baris2, kolom2);
+
+                    }
                     m2.splGaussJordan();
                     
                     System.out.println("Hasil matriks:");
@@ -76,7 +86,17 @@ public class Driver {
                 System.out.print("Banyak persamaan: ");
                 int n = input.nextInt();
                 Matriks mpol = new Matriks(n,2);
-                mpol.bacaMatriks();
+                System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        mpol.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        mpol.bacaMatriksfile(filename, n, 2);
+                    }
                 mpol.polinomMatriks();
                 System.out.println("Persamaan matriks dalam SPL:");
                 mpol.tulisMatriks();
