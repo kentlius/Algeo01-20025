@@ -436,7 +436,6 @@ public class Matriks {
                     {
                         if(m[iZ][i1]!=0)
                         {
-                            System.out.println("pengurangan di baris ke "+ (iZ+1) +" kolom ke "+ (i1+1));
                             for(int i2=i-1;i2>=0;i2--)
                             {
                                 double konstanta = m[i2][i1];
