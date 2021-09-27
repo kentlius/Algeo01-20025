@@ -129,7 +129,7 @@ public class Driver {
                             m2[i][j] = m1.getElm(i,j);
                         }
                     }
-                    double det = m1.KofaktorDet(besar);
+                    double det = m1.KofaktorDet(m1.m,besar);
                     String detsolution = ("Determinan adalah "+det);
                     System.out.println(detsolution);
                     System.out.println("\nMensave solution(1) atau tidak(0)?");
@@ -167,7 +167,7 @@ public class Driver {
                             m2[i][j] = m1.getElm(i,j);
                         }
                     }
-                    double det = m1.ReduksiDet(besar);
+                    double det = m1.ReduksiDet(m1.m,besar);
                     String detsolution = ("Determinan adalah "+det);
                     System.out.println(detsolution);
                     System.out.println("\nMensave solution(1) atau tidak(0)?");

@@ -651,22 +651,27 @@ public class Matriks {
         }
     }
 
-    public double KofaktorDet(int n) {
+    public static double KofaktorDet(double m[][], int n) {
         double determinan = 0;
         if (n == 1) {
             return m[0][0];
         } else if (n == 2) {
-            return ((m[0][0] * m[1][1]) * (m[0][1] * m[1][0]));
+            return ((m[0][0] * m[1][1]) - (m[0][1] * m[1][0]));
         } else {
-            double temp[][] = new double[n][n];
+            double temp[][] = new double[n-1][n-1];
             int tanda = 1;
             for (int f = 0; f < n; f++) {
                 Kofaktor(m, temp, 0, f, n);
-                determinan += tanda * m[0][f] * KofaktorDet(n - 1);
+                determinan += tanda * m[0][f] * KofaktorDet(temp,n - 1);
                 tanda = -tanda;
             }
             return determinan;
         }
+    }
+    public static void main(String[] args){
+        int N=3;
+        double matriks[][]={{1,2,3},{4,5,6},{7,8,9}};
+        System.out.print(KofaktorDet(matriks,N));
     }
 
     static void tukarBaris(double matriks[][], int n, int a, int b) {
@@ -712,15 +717,15 @@ public class Matriks {
         return jumlah;
     }
 
-    public double ReduksiDet(int n) {
+    public static double ReduksiDet(double matriks[][], int n) {
         double temp[][] = new double[n][n];
-        salinMatriks(m, temp, n);
-        double jumlah = reduksiBaris(m, n);
-        double detereminan = m[0][0];
+        salinMatriks(matriks, temp, n);
+        double jumlah = reduksiBaris(matriks, n);
+        double detereminan = matriks[0][0];
         for (int i = 1; i < n; i++) {
-            detereminan *= m[i][i];
+            detereminan *= matriks[i][i];
         }
-        salinMatriks(temp, m, n);
+        salinMatriks(temp, matriks, n);
         if (jumlah % 2 == 0) {
             return detereminan;
         } else {
