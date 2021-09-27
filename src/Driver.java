@@ -95,6 +95,35 @@ public class Driver {
                     }
                     System.out.print("\n");
                 }
+                if(pilihanspl==4)
+                {
+                    System.out.print("Masukkan baris: ");
+                    int baris4 = input.nextInt();
+                    Matriks m4 = new Matriks(baris4, baris4+1);
+
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m4.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m4.bacaMatriksfile(filename, baris4, baris4+1);
+
+                    }
+
+                    System.out.println(m4.splKramer());
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m4.saveSplSolution(m4.splKramer(), saveas);
+                    }
+                    System.out.print("\n");
+                }
             }
             if (pilihan==2)
             {

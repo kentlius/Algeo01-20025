@@ -885,4 +885,28 @@ public class Matriks {
         return m;
     }
 
+    public String[] splKramer(){
+        int n = brs;
+        String x[] = new String[n];
+        double temp[][] = new double[n][n];
+        for (int kramer=0;kramer<n;kramer++)
+        {
+            for(int i =0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    temp[i][j] = m[i][j];
+                }
+            }
+            double det = ReduksiDet(temp, n);
+            for(int i1=0;i1<brs;i1++)
+            {
+                temp[i1][kramer] = m[i1][kol-1];
+            }
+            x[kramer] = ("x"+(kramer+1)+" = "+Double.toString((ReduksiDet(temp, n))/det));
+            System.out.println(x[kramer]);
+        }
+        return x;
+    }
+
 }    
