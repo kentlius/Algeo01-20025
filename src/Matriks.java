@@ -855,6 +855,7 @@ public class Matriks {
         }
         return det;
     }
+    /*
     //masi error
     public double[][] inverseMatriksAdjoin() {
         int n=brs;
@@ -883,7 +884,7 @@ public class Matriks {
         }
         
         return m;
-    }
+    }*/
 
     public String[] splKramer(){
         int n = brs;

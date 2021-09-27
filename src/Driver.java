@@ -211,7 +211,7 @@ public class Driver {
             }
             if (pilihan==3)
             {
-                int pilihaninv = 0;
+                /*int pilihaninv = 0;
                 System.out.print("\n1. Metode Gauss Jordan");
                 System.out.print("\n2. Metode Adjoin");
                 System.out.print("\n-> Pilihan: ");
@@ -219,7 +219,7 @@ public class Driver {
 
                 if(pilihaninv==1)
                 {
-                    System.out.print("\nMasukkan besar matriks: ");
+                */    System.out.print("\nMasukkan besar matriks: ");
                     int besar = input.nextInt();
                     Matriks m3 = new Matriks(besar, besar);
                     System.out.println("Membaca text(1) atau input(2) : ");
@@ -243,7 +243,7 @@ public class Driver {
                         m3.saveMatrix(saveas);
                     }
                     System.out.print("\n");
-                }
+                /*}
                 if(pilihaninv==2)
                 {
                     System.out.print("\nMasukkan besar matriks: ");
@@ -270,7 +270,7 @@ public class Driver {
                         m3.saveMatrix(saveas);
                     }
                     System.out.print("\n");
-                }
+                }*/
             }
             if (pilihan==4)
             {
