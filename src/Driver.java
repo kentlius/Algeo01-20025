@@ -289,14 +289,14 @@ public class Driver {
                         mpol.bacaMatriksfile(filename, n, 2);
                     }
                 mpol.polinomMatriks();
-                System.out.println("Persamaan matriks dalam SPL:");
-                mpol.tulisMatriks();
+                //System.out.println("Persamaan matriks dalam SPL:");
+                //mpol.tulisMatriks();
                 mpol.splGauss();
-                System.out.println("Hasil matriks:");
-                mpol.tulisMatriks();
+                //System.out.println("Hasil matriks:");
+                //mpol.tulisMatriks();
 
                 System.out.print("Dicari f(x) untuk x = ");
-                double x = input.nextInt();
+                double x = input.nextDouble();
                 System.out.println(mpol.printPolinomsolution());
                 String polSolution = "f(x) = " + mpol.solvePolinom(x) + " untuk x = " + x;
                 System.out.println(polSolution);

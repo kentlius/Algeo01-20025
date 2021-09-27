@@ -35,7 +35,7 @@ public class Matriks {
            for (int i=0; i<baris; i++) {
               String[] line = sc.nextLine().trim().split(" ");
               for (int j=0; j<kolom; j++) {
-                 m[i][j] = Integer.parseInt(line[j]);
+                 m[i][j] = Double.parseDouble(line[j]);
               }
            }
         }
