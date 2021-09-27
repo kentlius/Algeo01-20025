@@ -635,7 +635,6 @@ public class Matriks {
         return FinalSolution;
     }
 
-    //public class Determinant {
     static void Kofaktor(double matriks[][], double temp[][], int p, int q, int n) {
         int i = 0, j = 0;
         for (int baris = 0; baris < n; baris++) {
@@ -667,11 +666,6 @@ public class Matriks {
             }
             return determinan;
         }
-    }
-    public static void main(String[] args){
-        int N=3;
-        double matriks[][]={{1,2,3},{4,5,6},{7,8,9}};
-        System.out.print(KofaktorDet(matriks,N));
     }
 
     static void tukarBaris(double matriks[][], int n, int a, int b) {
