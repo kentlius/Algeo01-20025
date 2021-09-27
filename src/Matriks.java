@@ -61,6 +61,30 @@ public class Matriks {
         }
     }
     
+    public void saveMatrix(String filename){
+        try{
+            File myObj = new File("../test/"+filename+".txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+                FileWriter writer = new FileWriter("../test/"+filename+".txt");
+    
+                for(int i=0;i<brs;i++) {
+                    for(int j=0;j<kol;j++)
+                    {
+                        writer.write(m[i][j] + " ");
+                    }
+                    writer.write(System.lineSeparator());
+                }
+                writer.close();
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+            }
+        }
+
     public void saveStringSolution(String solution, String filename){
         try{
         File myObj = new File("../test/"+filename+".txt");

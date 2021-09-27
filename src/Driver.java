@@ -193,18 +193,54 @@ public class Driver {
                     System.out.print("\nMasukkan besar matriks: ");
                     int besar = input.nextInt();
                     Matriks m3 = new Matriks(besar, besar);
-                    m3.bacaMatriks();
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m3.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m3.bacaMatriksfile(filename, besar, besar);
+                    }
                     m3.inverseMatriksGauss();
                     m3.tulisMatriks();
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m3.saveMatrix(saveas);
+                    }
+                    System.out.print("\n");
                 }
                 if(pilihaninv==2)
                 {
                     System.out.print("\nMasukkan besar matriks: ");
                     int besar = input.nextInt();
                     Matriks m3 = new Matriks(besar, besar);
-                    m3.bacaMatriks();
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m3.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m3.bacaMatriksfile(filename, besar, besar);
+                    }
                     m3.inverseMatriksAdjoin();
                     m3.tulisMatriks();
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    int save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        m3.saveMatrix(saveas);
+                    }
+                    System.out.print("\n");
                 }
             }
             if (pilihan==4)
