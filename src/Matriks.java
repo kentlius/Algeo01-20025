@@ -839,52 +839,65 @@ public class Matriks {
         m=x;
         return m;
     }
-  
-    static double determinant(double A[][], int n)
-    {
-        double det = 0;
-        double [][]temp = new double[n][n];
-        double tanda = 1;
 
-        for (int f = 0; f < n; f++)
-        {
-            Kofaktor(A, temp, 0, f, n);
-            det += tanda * A[0][f] * determinant(temp, n - 1);
+    public String splInverse(){
+        String solution=("");
+        double a[][]= new double[brs][brs];
+        double b[] = new double[brs];
+        int i,j,k;
+
+        for(i=0;i<brs;i++)
+            for(j=0;j<brs;j++)
+                a[i][j]=m[i][j];
+        
+        for(i=0;i<brs;i++)
+            b[i] = m[i][kol-1];
+
+        int n = brs;
+        double x[][] = new double[n][n];
+        double temp[][]=new double[n][n];
+        int index[] = new int[n];
+        for (i=0; i<n; ++i) 
+            temp[i][i] = 1;
+        
+        gaussian(a, index);
+        for (i=0; i<n-1; ++i)
+            for (j=i+1; j<n; ++j)
+                for (k=0; k<n; ++k)
+                    temp[index[j]][k]
+                            -= a[index[j]][i]*temp[index[i]][k];
     
-            tanda = -tanda;
+        for (i=0; i<n; ++i) 
+        {
+            x[n-1][i] = temp[index[n-1]][i]/a[index[n-1]][n-1];
+            for (j=n-2; j>=0; --j) 
+            {
+                x[j][i] = temp[index[j]][i];
+                for (k=j+1; k<n; ++k) 
+                {
+                    x[j][i] -= a[index[j]][k]*x[k][i];
+                }
+                x[j][i] /= a[index[j]][j];
+            }
         }
-        return det;
+
+        double c[]= new double[n];
+        for (i=0;i<n;i++)
+        {
+            for(j=0;j<n;j++)
+            {
+                c[i] += x[i][j] * b[j];
+            }
+        }
+        
+        
+        for(i = 0; i<n; i++)
+        {
+            solution+=("x" + i + "=" + c[i] + " ");
+        }
+
+        return solution;
     }
-    /*
-    //masi error
-    public double[][] inverseMatriksAdjoin() {
-        int n=brs;
-        double det=determinant(m,n);
-        
-        double tanda=1;
-        double adj[][] = new double[n][n];
-        double temp[][] = new double[n][n];
-
-        for(int i=0;i<n;i++)
-        {
-            for (int j=0;j<n;j++)
-            {
-                Kofaktor(m, temp, i, j, n);
-                tanda = ((i + j) % 2 == 0)? 1: -1;
-                adj[j][i] = tanda*determinant(temp, n-1);
-            }
-        }
-
-        for(int i=0;i<n;i++)
-        {
-            for (int j=0;j<n;j++)
-            {
-                m[i][j]=adj[i][j]/det;
-            }
-        }
-        
-        return m;
-    }*/
 
     public String[] splKramer(){
         int n = brs;

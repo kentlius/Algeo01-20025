@@ -95,6 +95,28 @@ public class Driver {
                     }
                     System.out.print("\n");
                 }
+                if(pilihanspl==3)
+                {
+                    System.out.print("Masukkan baris: ");
+                    int baris3 = input.nextInt();
+                    System.out.print("Masukkan kolom: ");
+                    int kolom3 = input.nextInt();
+                    Matriks m3 = new Matriks(baris3, kolom3);
+
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    int pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        m3.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        m3.bacaMatriksfile(filename, baris3, kolom3);
+                    }
+                    m3.splInverse();
+                    System.out.println(m3.splInverse());
+                }
                 if(pilihanspl==4)
                 {
                     System.out.print("Masukkan baris: ");
@@ -211,66 +233,30 @@ public class Driver {
             }
             if (pilihan==3)
             {
-                /*int pilihaninv = 0;
-                System.out.print("\n1. Metode Gauss Jordan");
-                System.out.print("\n2. Metode Adjoin");
-                System.out.print("\n-> Pilihan: ");
-                pilihaninv = input.nextInt();
-
-                if(pilihaninv==1)
-                {
-                */    System.out.print("\nMasukkan besar matriks: ");
-                    int besar = input.nextInt();
-                    Matriks m3 = new Matriks(besar, besar);
-                    System.out.println("Membaca text(1) atau input(2) : ");
-                    int pembaca = input.nextInt();
-                    if(pembaca == 2){
-                        System.out.println("Isi matriks:");
-                        m3.bacaMatriks();
-                    }
-                    else if(pembaca == 1){
-                        System.out.println("Nama text: ");
-                        filename = input.next();
-                        m3.bacaMatriksfile(filename, besar, besar);
-                    }
-                    m3.inverseMatriksGauss();
-                    m3.tulisMatriks();
-                    System.out.println("\nMensave solution(1) atau tidak(0)?");
-                    int save = input.nextInt();
-                    if (save==1){
-                        System.out.println("Nama file: ");
-                        String saveas = input.next();
-                        m3.saveMatrix(saveas);
-                    }
-                    System.out.print("\n");
-                /*}
-                if(pilihaninv==2)
-                {
-                    System.out.print("\nMasukkan besar matriks: ");
-                    int besar = input.nextInt();
-                    Matriks m3 = new Matriks(besar, besar);
-                    System.out.println("Membaca text(1) atau input(2) : ");
-                    int pembaca = input.nextInt();
-                    if(pembaca == 2){
-                        System.out.println("Isi matriks:");
-                        m3.bacaMatriks();
-                    }
-                    else if(pembaca == 1){
-                        System.out.println("Nama text: ");
-                        filename = input.next();
-                        m3.bacaMatriksfile(filename, besar, besar);
-                    }
-                    m3.inverseMatriksAdjoin();
-                    m3.tulisMatriks();
-                    System.out.println("\nMensave solution(1) atau tidak(0)?");
-                    int save = input.nextInt();
-                    if (save==1){
-                        System.out.println("Nama file: ");
-                        String saveas = input.next();
-                        m3.saveMatrix(saveas);
-                    }
-                    System.out.print("\n");
-                }*/
+                System.out.print("\nMasukkan besar matriks: ");
+                int besar = input.nextInt();
+                Matriks m3 = new Matriks(besar, besar);
+                System.out.println("Membaca text(1) atau input(2) : ");
+                int pembaca = input.nextInt();
+                if(pembaca == 2){
+                    System.out.println("Isi matriks:");
+                    m3.bacaMatriks();
+                }
+                else if(pembaca == 1){
+                    System.out.println("Nama text: ");
+                    filename = input.next();
+                    m3.bacaMatriksfile(filename, besar, besar);
+                }
+                m3.inverseMatriksGauss();
+                m3.tulisMatriks();
+                System.out.println("\nMensave solution(1) atau tidak(0)?");
+                int save = input.nextInt();
+                if (save==1){
+                    System.out.println("Nama file: ");
+                    String saveas = input.next();
+                    m3.saveMatrix(saveas);
+                }
+                System.out.print("\n");
             }
             if (pilihan==4)
             {
