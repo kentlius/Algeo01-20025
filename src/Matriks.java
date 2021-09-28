@@ -113,6 +113,13 @@ public class Matriks {
             System.out.println();
         }
     }
+    public void salinMatriks(double matriks[][], double temp[][], int n) {
+        for (int baris = 0; baris < n; baris++) {
+            for (int kolom = 0; kolom < n; kolom++) {
+                temp[baris][kolom] = matriks[baris][kolom];
+            }
+        }
+    }
 
     public double[][] swapBaris(int baris1, int baris2, double m[][]){
         double temp;
@@ -692,24 +699,7 @@ public class Matriks {
         }
     }
 
-    static void tukarBaris(double matriks[][], int n, int a, int b) {
-        double temp[] = new double[n];
-        for (int j = 0; j < n; j++) {
-            temp[j] = matriks[a][j];
-            matriks[a][j] = matriks[b][j];
-            matriks[b][j] = temp[j];
-        }
-    }
-
-    static void salinMatriks(double matriks[][], double temp[][], int n) {
-        for (int baris = 0; baris < n; baris++) {
-            for (int kolom = 0; kolom < n; kolom++) {
-                temp[baris][kolom] = matriks[baris][kolom];
-            }
-        }
-    }
-
-    public static double reduksiBaris(double matriks[][], int n) {
+    public double reduksiBaris(double matriks[][], int n) {
         int i = 0, l = 0, index;
         double kurang;
         int jumlah = 0;
@@ -717,7 +707,7 @@ public class Matriks {
             for (int h = j; h < n; h++) {
                 index = i + 1;
                 while ((matriks[i][l] == 0) && (index < n)) {
-                    tukarBaris(matriks, n, i, index);
+                    swapBaris(i, index, matriks);
                     jumlah++;
                     index++;
                 }
@@ -735,7 +725,7 @@ public class Matriks {
         return jumlah;
     }
 
-    public static double ReduksiDet(double matriks[][], int n) {
+    public double ReduksiDet(double matriks[][], int n) {
         double temp[][] = new double[n][n];
         salinMatriks(matriks, temp, n);
         double jumlah = reduksiBaris(matriks, n);
