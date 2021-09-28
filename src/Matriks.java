@@ -750,8 +750,7 @@ public class Matriks {
             return -detereminan;
         }
     }
-    
-    //metode inverse
+
     public static void gaussian(double a[][], int index[]) 
     {
         int n = index.length;
