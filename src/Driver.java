@@ -296,7 +296,47 @@ public class Driver {
                     }
                     System.out.print("\n");
                 case 5:
-                    break;
+                    System.out.print("Banyak peubah: ");
+                    int peubah = input.nextInt();
+                    System.out.print("Banyak persamaan: ");
+                    int persamaan = input.nextInt();
+                    Matriks mreg = new Matriks(peubah+1,peubah+2);
+                    Matriks rawdata = new Matriks(persamaan,peubah+1);
+                    System.out.println("Membaca text(1) atau input(2) : ");
+                    pembaca = input.nextInt();
+                    if(pembaca == 2){
+                        System.out.println("Isi matriks:");
+                        rawdata.bacaMatriks();
+                    }
+                    else if(pembaca == 1){
+                        System.out.println("Nama text: ");
+                        filename = input.next();
+                        rawdata.bacaMatriksfile(filename, persamaan, peubah+1);
+                    }     
+                    mreg.Regresi(peubah, persamaan,rawdata);
+                    mreg.tulisMatriks();
+                    mreg.splGauss();
+                    System.out.println(mreg.printRegresisolution());
+                    System.out.println("Dicari y untuk: ");
+                    double x1[] = new double[peubah];
+                    for(int i=0;i<peubah;i++)
+                    {
+                        System.out.print("x"+(i+1)+": ");
+                        x1[i] = input.nextDouble();
+                    }
+                    String RegSolution = "y = " + mreg.solveRegresi(x1);
+                    System.out.println(RegSolution);
+                    String regResult = mreg.printPolinomsolution();
+                    regResult += ("\n"+RegSolution);
+                    System.out.println("\nMensave solution(1) atau tidak(0)?");
+                    save = input.nextInt();
+                    if (save==1){
+                        System.out.println("Nama file: ");
+                        String saveas = input.next();
+                        mreg.saveStringSolution(regResult, saveas);
+                    }
+                    System.out.print("\n");
+
                 case 6:
                     break;
                 default:

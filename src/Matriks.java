@@ -28,6 +28,17 @@ public class Matriks {
             for(j=0;j<kol;j++)
                 m[i][j]=input.nextDouble();
     }
+
+    public void bacaMatriksReg() {
+        Scanner input = new Scanner(System.in);
+        for(int i=0;i<kol-1;i++){
+            System.out.print("Nilai x"+(i+1)+": ");
+            m[0][i]=input.nextDouble();
+        }
+        System.out.print("Nilai y: ");
+        m[0][kol-1] = input.nextDouble();
+        input.close();
+    }
     
     public void bacaMatriksfile(String text, int baris, int kolom) throws Exception {
         Scanner sc = new Scanner(new BufferedReader(new FileReader("../test/"+text+".txt")));
@@ -912,4 +923,152 @@ public class Matriks {
         return x;
     }
 
+    public double[][] Regresi(int perubah, int persamaan, Matriks m1)
+    {
+        double temp;
+        m[0][0] = persamaan;
+
+        for(int i=0;i<brs-1;i++){
+            for(int j=0;j<kol-2;j++)
+            {
+                temp = 0;
+                for(int k=0;k<persamaan;k++)
+                {
+                    temp += m1.getElm(k, i)*m1.getElm(k,j);
+                }
+                m[i+1][j+1] = temp;
+            }
+        }
+
+        for(int i=0;i<perubah;i++)
+        {
+            for(int j=0;j<persamaan;j++)
+            {
+                m[i+1][0] += m1.getElm(j, i);
+                m[0][i+1] += m1.getElm(j, i);
+            }
+        }
+
+        for(int i=1;i<brs;i++){
+            temp =0 ;
+            for(int j=0;j<persamaan;j++)
+            {
+                temp += m1.getElm(j, perubah)*m1.getElm(j,i-1);
+            }
+            m[i][kol-1] = temp;
+        }
+        return m;
+    }
+
+    public String printRegresisolution(){
+        String x[] = new String[kol-1];
+        int banyakzero = 0;
+        // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
+        boolean solvable = true;
+        for (int i=0;i<brs;i++){
+            banyakzero = 0;
+            for (int j=0;j<kol;j++){
+                if (m[i][j]==0){
+                    banyakzero += 1;
+                }
+            }
+            if(banyakzero == kol-1){
+                solvable = false;
+                break;
+            }
+        }
+        if(!solvable)
+        {
+            System.out.println("Sistem persamaan linear tidak ada solusi.");
+            x = null;
+        } else{
+            boolean hanyaAngka = true;
+            for(int i=0;i<brs;i++)
+            {
+                if (m[i][i]==0)
+                {
+                    hanyaAngka = false;
+                }
+            }
+            // solusi hanya dalam bentuk angka
+            if ((brs == kol-1) && (hanyaAngka==true)){
+                for(int i=kol-2;i>=0;i--){
+                    if(i==kol-2){
+                        x[i] = Double.toString(m[i][kol-1]);
+                    } else {
+                        double temp = m[i][kol-1];
+                        for(int j=i+1;j<kol-1;j++){
+                            temp -= m[i][j]*Double.valueOf(x[j]);
+                        }
+                        x[i] = Double.toString(temp);
+                    }
+                }
+            }
+
+        }
+        String FinalSolution = ("y = "+x[0]);
+        for(int i = 1; i<x.length; i++)
+        {
+            FinalSolution += (" + "+x[i]+" x"+i);
+        }
+        FinalSolution += " + ϵ";
+        return FinalSolution;
+    }
+
+    public double solveRegresi(double[] n){
+        String x[] = new String[kol-1];
+        int banyakzero = 0;
+        double FinalSolution;
+        // menentukan jika tidak ada solusi (ada baris yang semuanya bernilai 0)
+        boolean solvable = true;
+        for (int i=0;i<brs;i++){
+            banyakzero = 0;
+            for (int j=0;j<kol;j++){
+                if (m[i][j]==0){
+                    banyakzero += 1;
+                }
+            }
+            if(banyakzero == kol-1){
+                solvable = false;
+                break;
+            }
+        }
+        if(!solvable)
+        {
+            System.out.println("Sistem persamaan linear tidak ada solusi.");
+            x = null;
+            FinalSolution = 0;
+        } else{
+            boolean hanyaAngka = true;
+            for(int i=0;i<brs;i++)
+            {
+                if (m[i][i]==0)
+                {
+                    hanyaAngka = false;
+                }
+            }
+            // solusi hanya dalam bentuk angka
+            if ((brs == kol-1) && (hanyaAngka==true)){
+                for(int i=kol-2;i>=0;i--){
+                    if(i==kol-2){
+                        x[i] = Double.toString(m[i][kol-1]);
+                    } else {
+                        double temp = m[i][kol-1];
+                        for(int j=i+1;j<kol-1;j++){
+                            temp -= m[i][j]*Double.valueOf(x[j]);
+                        }
+                        x[i] = Double.toString(temp);
+                    }
+                }
+            }
+
+            double hasilakhir = Double.valueOf(x[0]);
+            for(int i = 1; i < x.length; ++i)
+            {
+                hasilakhir += Double.valueOf(x[i])*(n[i-1]);
+            }
+            FinalSolution = hasilakhir;
+        }
+        return FinalSolution;
+    }
 }    
