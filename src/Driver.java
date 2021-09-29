@@ -10,9 +10,9 @@ public class Driver {
         String filename="";
         
         do{
-            System.out.println("============================");
-            System.out.println("-----------MENU-------------");
-            System.out.println("============================");
+            System.out.println("================================");
+            System.out.println("=----------MENU UTAMA----------=");
+            System.out.println("================================");
             System.out.println("1. Sistem Persamaan Linier");
             System.out.println("2. Determinan");
             System.out.println("3. Matriks balikan");
@@ -25,6 +25,9 @@ public class Driver {
 
             if(pilihan==1)
             {
+                System.out.println("================================");
+                System.out.println("=---------Pilih Metode---------=");
+                System.out.println("================================");
                 System.out.println("1. Metode eliminasi Gauss");
                 System.out.println("2. Metode eliminasi Gauss-Jordan");
                 System.out.println("3. Metode matriks balikan");
@@ -182,6 +185,9 @@ public class Driver {
                     
             if(pilihan==2)
             {
+                System.out.println("================================");
+                System.out.println("=---------Pilih Metode---------=");
+                System.out.println("================================");
                 System.out.println("1. Metode Ekspansi Kofaktor");
                 System.out.println("2. Metode Reduksi Baris");
                 System.out.print("-> Pilihan: ");
@@ -279,7 +285,7 @@ public class Driver {
 
             if(pilihan==3)
             {
-                System.out.print("\nMasukkan besar matriks: ");
+                System.out.print("Masukkan besar matriks: ");
                 int besar = input.nextInt();
                 Matriks m = new Matriks(besar, besar);
                 System.out.println("");
