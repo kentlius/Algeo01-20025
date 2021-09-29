@@ -692,7 +692,7 @@ public class Matriks {
         }
     }
 
-    public static double KofaktorDet(double m[][], int n) {
+    public double KofaktorDet(double m[][], int n) {
         double determinan = 0;
         if (n == 1) {
             return m[0][0];
@@ -752,16 +752,14 @@ public class Matriks {
         }
     }
 
-    public static void gaussian(double a[][], int index[]) 
+    public static void gaussPersegi(double a[][], int index[]) 
     {
         int n = index.length;
         double c[] = new double[n];
  
- // Initialize the index
         for (int i=0; i<n; ++i) 
             index[i] = i;
  
- // Find the rescaling factors, one from each row
         for (int i=0; i<n; ++i) 
         {
             double c1 = 0;
@@ -773,7 +771,6 @@ public class Matriks {
             c[i] = c1;
         }
  
- // Search the pivoting element from each column
         int k = 0;
         for (int j=0; j<n-1; ++j) 
         {
@@ -789,7 +786,6 @@ public class Matriks {
                 }
             }
  
-   // Interchange rows according to the pivoting order
             int itmp = index[j];
             index[j] = index[k];
             index[k] = itmp;
@@ -797,10 +793,8 @@ public class Matriks {
             {
                 double pj = a[index[i]][j]/a[index[j]][j];
  
- // Record pivoting ratios below the diagonal
                 a[index[i]][j] = pj;
  
- // Modify other elements accordingly
                 for (int l=j+1; l<n; ++l)
                     a[index[i]][l] -= pj*a[index[j]][l];
             }
@@ -816,7 +810,7 @@ public class Matriks {
         for (int i=0; i<n; ++i) 
             temp[i][i] = 1;
         
-        gaussian(m, index);
+        gaussPersegi(m, index);
         for (int i=0; i<n-1; ++i)
             for (int j=i+1; j<n; ++j)
                 for (int k=0; k<n; ++k)
@@ -860,7 +854,7 @@ public class Matriks {
         for (i=0; i<n; ++i) 
             temp[i][i] = 1;
         
-        gaussian(a, index);
+        gaussPersegi(a, index);
         for (i=0; i<n-1; ++i)
             for (j=i+1; j<n; ++j)
                 for (k=0; k<n; ++k)
