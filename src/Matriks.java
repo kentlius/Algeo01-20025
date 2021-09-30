@@ -28,17 +28,6 @@ public class Matriks {
             for(j=0;j<kol;j++)
                 m[i][j]=input.nextDouble();
     }
-
-    public void bacaMatriksReg() {
-        Scanner input = new Scanner(System.in);
-        for(int i=0;i<kol-1;i++){
-            System.out.print("Nilai x"+(i+1)+": ");
-            m[0][i]=input.nextDouble();
-        }
-        System.out.print("Nilai y: ");
-        m[0][kol-1] = input.nextDouble();
-        input.close();
-    }
     
     public void bacaMatriksfile(String text, int baris, int kolom) throws Exception {
         Scanner sc = new Scanner(new BufferedReader(new FileReader("test/"+text+".txt")));
