@@ -41,7 +41,7 @@ public class Matriks {
     }
     
     public void bacaMatriksfile(String text, int baris, int kolom) throws Exception {
-        Scanner sc = new Scanner(new BufferedReader(new FileReader("../test/"+text+".txt")));
+        Scanner sc = new Scanner(new BufferedReader(new FileReader("test/"+text+".txt")));
         while(sc.hasNextLine()) {
            for (int i=0; i<baris; i++) {
               String[] line = sc.nextLine().trim().split(" ");
@@ -802,35 +802,43 @@ public class Matriks {
     }
 
     public double[][] inverseMatriksGauss() {
-        //identitas matriks
-        int n = brs;
-        double x[][] = new double[n][n];
-        double temp[][]=new double[n][n];
-        int index[] = new int[n];
-        for (int i=0; i<n; ++i) 
-            temp[i][i] = 1;
-        
-        gaussPersegi(m, index);
-        for (int i=0; i<n-1; ++i)
-            for (int j=i+1; j<n; ++j)
-                for (int k=0; k<n; ++k)
-                    temp[index[j]][k]
-                    	    -= m[index[j]][i]*temp[index[i]][k];
- 
-        for (int i=0; i<n; ++i) 
+        if(KofaktorDet(m, brs)==0)
         {
-            x[n-1][i] = temp[index[n-1]][i]/m[index[n-1]][n-1];
-            for (int j=n-2; j>=0; --j) 
-            {
-                x[j][i] = temp[index[j]][i];
-                for (int k=j+1; k<n; ++k) 
-                {
-                    x[j][i] -= m[index[j]][k]*x[k][i];
-                }
-                x[j][i] /= m[index[j]][j];
-            }
+            System.out.println("Determinan = 0, matriks tidak memiliki balikan.");
+
         }
-        m=x;
+        else
+        {
+            int n = brs;
+            double x[][] = new double[n][n];
+            double temp[][]=new double[n][n];
+            int index[] = new int[n];
+            for (int i=0; i<n; ++i) 
+                temp[i][i] = 1;
+            
+            gaussPersegi(m, index);
+            for (int i=0; i<n-1; ++i)
+                for (int j=i+1; j<n; ++j)
+                    for (int k=0; k<n; ++k)
+                        temp[index[j]][k]
+                                -= m[index[j]][i]*temp[index[i]][k];
+    
+            for (int i=0; i<n; ++i) 
+            {
+                x[n-1][i] = temp[index[n-1]][i]/m[index[n-1]][n-1];
+                for (int j=n-2; j>=0; --j) 
+                {
+                    x[j][i] = temp[index[j]][i];
+                    for (int k=j+1; k<n; ++k) 
+                    {
+                        x[j][i] -= m[index[j]][k]*x[k][i];
+                    }
+                    x[j][i] /= m[index[j]][j];
+                }
+            }
+            m=x;
+            
+        }
         return m;
     }
 
@@ -887,7 +895,7 @@ public class Matriks {
         
         for(i = 0; i<n; i++)
         {
-            solution+=("x" + i + "=" + c[i] + " ");
+            solution+=("x" + (i+1) + " = " + c[i] + "\n");
         }
 
         return solution;
@@ -1066,4 +1074,4 @@ public class Matriks {
         return FinalSolution;
     }
     
-}    
+}

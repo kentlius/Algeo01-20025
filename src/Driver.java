@@ -68,7 +68,7 @@ public class Driver {
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
                     if (save=="y" || save=="Y"){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         String saveas = input.next();
                         m1.saveSplSolution(m1.solveGauss(), saveas);
                     }
@@ -93,7 +93,7 @@ public class Driver {
                         m2.bacaMatriks();
                     }
                     else if(read == 1){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         filename = input.next();
                         m2.bacaMatriksfile(filename, baris2, kolom2);
                     }
@@ -106,7 +106,7 @@ public class Driver {
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
                     if (save=="y" || save=="Y"){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         String saveas = input.next();
                         m2.saveSplSolution(m2.solveGauss(), saveas);
                     }
@@ -131,18 +131,20 @@ public class Driver {
                         m3.bacaMatriks();
                     }
                     else if(read == 1){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         filename = input.next();
                         m3.bacaMatriksfile(filename, baris3, kolom3);
                     }
 
                     m3.splInverse();
+                    System.out.println("Hasil matriks:");
+                    m3.tulisMatriks();
                     System.out.println(m3.splInverse());
 
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
                     if (save=="y" || save=="Y"){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         String saveas = input.next();
                         m3.saveSplSolution(m3.solveGauss(), saveas);
                     }
@@ -165,7 +167,7 @@ public class Driver {
                         m4.bacaMatriks();
                     }
                     else if(read == 1){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         filename = input.next();
                         m4.bacaMatriksfile(filename, baris4, baris4+1);
                     }
@@ -175,7 +177,7 @@ public class Driver {
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
                     if (save=="y" || save=="Y"){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         String saveas = input.next();
                         m4.saveSplSolution(m4.splKramer(), saveas);
                     }
@@ -231,7 +233,7 @@ public class Driver {
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
                     if (save=="y" || save=="Y"){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         String saveas = input.next();
                         m1.saveStringSolution(detsolution, saveas);
                     }
@@ -255,7 +257,7 @@ public class Driver {
                         m1.bacaMatriks();
                     }
                     else if(read == 1){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         filename = input.next();
                         m1.bacaMatriksfile(filename, besar, besar);
                     }
@@ -275,7 +277,7 @@ public class Driver {
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
                     if (save=="y" || save=="Y"){
-                        System.out.println("Nama file: ");
+                        System.out.print("Nama file: ");
                         String saveas = input.next();
                         m1.saveStringSolution(detsolution, saveas);
                     }
@@ -300,18 +302,19 @@ public class Driver {
                     m.bacaMatriks();
                 }
                 else if(read == 1){
-                    System.out.println("Nama file: ");
+                    System.out.print("Nama file: ");
                     filename = input.next();
                     m.bacaMatriksfile(filename, besar, besar);
                 }
 
                 m.inverseMatriksGauss();
+                System.out.println("Hasil Inverse:");
                 m.tulisMatriks();
 
                 System.out.print("\nSimpan hasil dalam file (Y/N)?");
                 save = input.next();
                 if (save=="y" || save=="Y"){
-                    System.out.println("Nama file: ");
+                    System.out.print("Nama file: ");
                     String saveas = input.next();
                     m.saveMatrix(saveas);
                 }
@@ -335,7 +338,7 @@ public class Driver {
                     mpol.bacaMatriks();
                 }
                 else if(read == 1){
-                    System.out.println("Nama file: ");
+                    System.out.print("Nama file: ");
                     filename = input.next();
                     mpol.bacaMatriksfile(filename, n, 2);
                 }
@@ -358,7 +361,7 @@ public class Driver {
                 System.out.print("\nSimpan hasil dalam file (Y/N)?");
                 save = input.next();
                 if (save=="y" || save=="Y"){
-                    System.out.println("Nama file: ");
+                    System.out.print("Nama file: ");
                     String saveas = input.next();
                     mpol.saveStringSolution(Result, saveas);
                 }
@@ -385,7 +388,7 @@ public class Driver {
                     rawdata.bacaMatriks();
                 }
                 else if(read == 1){
-                    System.out.println("Nama file: ");
+                    System.out.print("Nama file: ");
                     filename = input.next();
                     rawdata.bacaMatriksfile(filename, persamaan, peubah+1);
                 }     
@@ -409,7 +412,7 @@ public class Driver {
                 System.out.print("\nSimpan hasil dalam file (Y/N)?");
                 save = input.next();
                 if (save=="y" || save=="Y"){
-                    System.out.println("Nama file: ");
+                    System.out.print("Nama file: ");
                     String saveas = input.next();
                     mreg.saveStringSolution(regResult, saveas);
                 }
