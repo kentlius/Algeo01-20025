@@ -939,7 +939,12 @@ public class Matriks {
                 m[0][i+1] += m1.getElm(j, i);
             }
         }
-
+        temp = 0;
+        for (int i=0;i<persamaan;i++)
+        {
+            temp += m1.getElm(i, perubah);
+        }
+        m[0][kol-1] = temp;
         for(int i=1;i<brs;i++){
             temp =0 ;
             for(int j=0;j<persamaan;j++)
