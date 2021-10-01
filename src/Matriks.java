@@ -30,7 +30,7 @@ public class Matriks {
     }
     
     public void bacaMatriksfile(String text, int baris, int kolom) throws Exception {
-        Scanner sc = new Scanner(new BufferedReader(new FileReader("test/"+text+".txt")));
+        Scanner sc = new Scanner(new BufferedReader(new FileReader("../test/"+text+".txt")));
         while(sc.hasNextLine()) {
            for (int i=0; i<baris; i++) {
               String[] line = sc.nextLine().trim().split(" ");
@@ -69,10 +69,10 @@ public class Matriks {
 
     public void saveSplSolution(String[] solution, String filename){
         try{
-        File myObj = new File("test/"+filename+".txt");
+        File myObj = new File("../test/"+filename+".txt");
         if (myObj.createNewFile()) {
             System.out.println("File created: " + myObj.getName());
-            FileWriter writer = new FileWriter("test/"+filename+".txt");
+            FileWriter writer = new FileWriter("../test/"+filename+".txt");
 
             for(int i=0;i<kol-1;i++) {
                 writer.write(solution[i] + System.lineSeparator());
@@ -89,10 +89,10 @@ public class Matriks {
     
     public void saveMatrix(String filename){
         try{
-            File myObj = new File("test/"+filename+".txt");
+            File myObj = new File("../test/"+filename+".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-                FileWriter writer = new FileWriter("test/"+filename+".txt");
+                FileWriter writer = new FileWriter("../test/"+filename+".txt");
     
                 for(int i=0;i<brs;i++) {
                     for(int j=0;j<kol;j++)
@@ -113,10 +113,10 @@ public class Matriks {
 
     public void saveStringSolution(String solution, String filename){
         try{
-        File myObj = new File("test/"+filename+".txt");
+        File myObj = new File("../test/"+filename+".txt");
         if (myObj.createNewFile()) {
             System.out.println("File created: " + myObj.getName());
-            FileWriter writer = new FileWriter("test/"+filename+".txt");
+            FileWriter writer = new FileWriter("../test/"+filename+".txt");
             writer.write(solution);
             writer.close();
         } else {
