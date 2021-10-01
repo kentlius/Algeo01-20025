@@ -39,34 +39,60 @@ public class Matriks {
               }
            }
         }
-     }
+    }
+
+    //fungsi baca matriks tanpa input baris dan kolom
+    /*
+    public void bacaMatriksFile(String text){
+        File file = new File("test/"+text+".txt");
+        try {
+            Scanner scanFile = new Scanner(new BufferedReader(new FileReader("test/" +text + ".txt")));
+            while(scanFile.hasNextLine()) 
+            {
+                brs++;
+                kol = scanFile.nextLine().trim().split(" ").length;
+            }
+            Scanner scanner = new Scanner(file);
+            m = new double[brs][kol];
+            for (int i = 0; i < brs; i++) {
+                String[] numbers = scanner.nextLine().split(" ");
+                for (int j = 0; j < kol; j++) {
+                    m[i][j] = Integer.parseInt(numbers[j]);
+                }
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    */
 
     public void saveSplSolution(String[] solution, String filename){
         try{
-        File myObj = new File("../test/"+filename+".txt");
+        File myObj = new File("test/"+filename+".txt");
         if (myObj.createNewFile()) {
             System.out.println("File created: " + myObj.getName());
-            FileWriter writer = new FileWriter("../test/"+filename+".txt");
+            FileWriter writer = new FileWriter("test/"+filename+".txt");
 
             for(int i=0;i<kol-1;i++) {
                 writer.write(solution[i] + System.lineSeparator());
             }
             writer.close();
         } else {
-            System.out.println("File already exists.");
+            System.out.println("File sudah ada.");
         }
     } catch (IOException e) {
-        System.out.println("An error occurred.");
+        System.out.println("error.");
         e.printStackTrace();
         }
     }
     
     public void saveMatrix(String filename){
         try{
-            File myObj = new File("../test/"+filename+".txt");
+            File myObj = new File("test/"+filename+".txt");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-                FileWriter writer = new FileWriter("../test/"+filename+".txt");
+                FileWriter writer = new FileWriter("test/"+filename+".txt");
     
                 for(int i=0;i<brs;i++) {
                     for(int j=0;j<kol;j++)
@@ -77,27 +103,27 @@ public class Matriks {
                 }
                 writer.close();
             } else {
-                System.out.println("File already exists.");
+                System.out.println("File sudah ada.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("error.");
             e.printStackTrace();
             }
         }
 
     public void saveStringSolution(String solution, String filename){
         try{
-        File myObj = new File("../test/"+filename+".txt");
+        File myObj = new File("test/"+filename+".txt");
         if (myObj.createNewFile()) {
             System.out.println("File created: " + myObj.getName());
-            FileWriter writer = new FileWriter("../test/"+filename+".txt");
+            FileWriter writer = new FileWriter("test/"+filename+".txt");
             writer.write(solution);
             writer.close();
         } else {
-            System.out.println("File already exists.");
+            System.out.println("File sudah ada.");
         }
     } catch (IOException e) {
-        System.out.println("An error occurred.");
+        System.out.println("error.");
         e.printStackTrace();
         }
     }
