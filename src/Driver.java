@@ -136,10 +136,16 @@ public class Driver {
                         m3.bacaMatriksfile(filename, baris3, kolom3);
                     }
 
-                    m3.splInverse();
-                    System.out.println("Hasil matriks:");
-                    m3.tulisMatriks();
-                    System.out.println(m3.splInverse());
+                    if(m3.splInverse()==null)
+                    {
+                        System.out.println("Determinan = 0, matriks tidak memiliki balikan dan hasil SPL.");
+                    }
+                    else
+                    {
+                        System.out.println("Hasil matriks:");
+                        m3.tulisMatriks();
+                        System.out.println(m3.splInverse());
+                    }
 
                     System.out.print("\nSimpan hasil dalam file (Y/N)?");
                     save = input.next();
@@ -307,10 +313,16 @@ public class Driver {
                     m.bacaMatriksfile(filename, besar, besar);
                 }
 
-                m.inverseMatriksGauss();
-                System.out.println("Hasil Inverse:");
-                m.tulisMatriks();
-
+                if (m.inverseMatriksGauss()==null)
+                {
+                    System.out.println("Determinan = 0, matriks tidak memiliki balikan.");
+                }
+                else
+                {
+                    System.out.println("Hasil Inverse:");
+                    m.tulisMatriks();
+                }
+                
                 System.out.print("\nSimpan hasil dalam file (Y/N)?");
                 save = input.next();
                 if (save=="y" || save=="Y"){

@@ -741,32 +741,34 @@ public class Matriks {
         }
     }
 
-    public static void gaussPersegi(double a[][], int index[]) 
+    public static void gaussPersegi(double m[][], int index[]) 
     {
-        int n = index.length;
-        double c[] = new double[n];
+        int i, j, k=0, l;
+        int n=index.length;
+        double c[]=new double[n];
  
-        for (int i=0; i<n; ++i) 
+        for (i=0; i<n; ++i)
+        {
             index[i] = i;
- 
-        for (int i=0; i<n; ++i) 
+        } 
+
+        for (i=0; i<n; ++i) 
         {
             double c1 = 0;
-            for (int j=0; j<n; ++j) 
+            for (j=0; j<n; ++j) 
             {
-                double c0 = Math.abs(a[i][j]);
+                double c0 = Math.abs(m[i][j]);
                 if (c0 > c1) c1 = c0;
             }
             c[i] = c1;
         }
  
-        int k = 0;
-        for (int j=0; j<n-1; ++j) 
+        for (j=0; j<n-1; ++j) 
         {
             double pi1 = 0;
-            for (int i=j; i<n; ++i) 
+            for (i=j; i<n; ++i) 
             {
-                double pi0 = Math.abs(a[index[i]][j]);
+                double pi0 = Math.abs(m[index[i]][j]);
                 pi0 /= c[index[i]];
                 if (pi0 > pi1) 
                 {
@@ -775,17 +777,17 @@ public class Matriks {
                 }
             }
  
-            int itmp = index[j];
+            int temp = index[j];
             index[j] = index[k];
-            index[k] = itmp;
-            for (int i=j+1; i<n; ++i) 	
+            index[k] = temp;
+            for (i=j+1; i<n; ++i) 	
             {
-                double pj = a[index[i]][j]/a[index[j]][j];
+                double pj = m[index[i]][j]/m[index[j]][j];
  
-                a[index[i]][j] = pj;
+                m[index[i]][j] = pj;
  
-                for (int l=j+1; l<n; ++l)
-                    a[index[i]][l] -= pj*a[index[j]][l];
+                for (l=j+1; l<n; ++l)
+                    m[index[i]][l] -= pj*m[index[j]][l];
             }
         }
     }
@@ -793,8 +795,7 @@ public class Matriks {
     public double[][] inverseMatriksGauss() {
         if(KofaktorDet(m, brs)==0)
         {
-            System.out.println("Determinan = 0, matriks tidak memiliki balikan.");
-
+            return null;
         }
         else
         {
@@ -809,8 +810,7 @@ public class Matriks {
             for (int i=0; i<n-1; ++i)
                 for (int j=i+1; j<n; ++j)
                     for (int k=0; k<n; ++k)
-                        temp[index[j]][k]
-                                -= m[index[j]][i]*temp[index[i]][k];
+                        temp[index[j]][k]-=m[index[j]][i]*temp[index[i]][k];
     
             for (int i=0; i<n; ++i) 
             {
@@ -826,9 +826,9 @@ public class Matriks {
                 }
             }
             m=x;
-            
+            return m;
         }
-        return m;
+        
     }
 
     public String splInverse(){
@@ -840,52 +840,58 @@ public class Matriks {
         for(i=0;i<brs;i++)
             for(j=0;j<brs;j++)
                 a[i][j]=m[i][j];
-        
-        for(i=0;i<brs;i++)
-            b[i] = m[i][kol-1];
 
-        int n = brs;
-        double x[][] = new double[n][n];
-        double temp[][]=new double[n][n];
-        int index[] = new int[n];
-        for (i=0; i<n; ++i) 
-            temp[i][i] = 1;
-        
-        gaussPersegi(a, index);
-        for (i=0; i<n-1; ++i)
-            for (j=i+1; j<n; ++j)
-                for (k=0; k<n; ++k)
-                    temp[index[j]][k]
-                            -= a[index[j]][i]*temp[index[i]][k];
-    
-        for (i=0; i<n; ++i) 
+        if(KofaktorDet(a, brs)==0)
         {
-            x[n-1][i] = temp[index[n-1]][i]/a[index[n-1]][n-1];
-            for (j=n-2; j>=0; --j) 
+            return null;
+        }
+        else
+        {
+            for(i=0;i<brs;i++)
+                b[i] = m[i][kol-1];
+
+            int n = brs;
+            double x[][] = new double[n][n];
+            double temp[][]=new double[n][n];
+            int index[] = new int[n];
+            for (i=0; i<n; ++i) 
+                temp[i][i] = 1;
+            
+            gaussPersegi(a, index);
+            for (i=0; i<n-1; ++i)
+                for (j=i+1; j<n; ++j)
+                    for (k=0; k<n; ++k)
+                        temp[index[j]][k]
+                                -= a[index[j]][i]*temp[index[i]][k];
+
+            for (i=0; i<n; ++i) 
             {
-                x[j][i] = temp[index[j]][i];
-                for (k=j+1; k<n; ++k) 
+                x[n-1][i] = temp[index[n-1]][i]/a[index[n-1]][n-1];
+                for (j=n-2; j>=0; --j) 
                 {
-                    x[j][i] -= a[index[j]][k]*x[k][i];
+                    x[j][i] = temp[index[j]][i];
+                    for (k=j+1; k<n; ++k) 
+                    {
+                        x[j][i] -= a[index[j]][k]*x[k][i];
+                    }
+                    x[j][i] /= a[index[j]][j];
                 }
-                x[j][i] /= a[index[j]][j];
             }
-        }
 
-        double c[]= new double[n];
-        for (i=0;i<n;i++)
-        {
-            for(j=0;j<n;j++)
+            double c[]= new double[n];
+            for (i=0;i<n;i++)
             {
-                c[i] += x[i][j] * b[j];
+                for(j=0;j<n;j++)
+                {
+                    c[i] += x[i][j] * b[j];
+                }
+            }
+            
+            for(i = 0; i<n; i++)
+            {
+                solution+=("x" + (i+1) + " = " + c[i] + "\n");
             }
         }
-        
-        for(i = 0; i<n; i++)
-        {
-            solution+=("x" + (i+1) + " = " + c[i] + "\n");
-        }
-
         return solution;
     }
 
