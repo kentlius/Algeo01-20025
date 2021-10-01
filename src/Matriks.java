@@ -881,7 +881,6 @@ public class Matriks {
             }
         }
         
-        
         for(i = 0; i<n; i++)
         {
             solution+=("x" + (i+1) + " = " + c[i] + "\n");
