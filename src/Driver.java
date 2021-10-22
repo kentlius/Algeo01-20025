@@ -359,8 +359,8 @@ public class Driver {
                 //System.out.println("Persamaan matriks dalam SPL:");
                 //mpol.tulisMatriks();
                 mpol.splGauss();
-                //System.out.println("Hasil matriks:");
-                //mpol.tulisMatriks();
+                System.out.println("Hasil matriks:");
+                mpol.tulisMatriks();
 
                 System.out.print("Dicari f(x) untuk x = ");
                 double x = input.nextDouble();
